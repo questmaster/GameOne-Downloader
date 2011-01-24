@@ -3,6 +3,9 @@ package de.questmaster.gameone_grabber;
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -16,16 +19,20 @@ import java.io.File;
  */
 public class Browser extends JFrame {
     private JPanel panel1;
-    private JTextField episodeField;
     private JTextField saveField;
     private JButton grabButton;
     private JButton selectButton;
+    private JSpinner episodeSpinner;
+
+    private String episodeNumber = "118";
 
     public Browser() {
         super("GameOne Grabber");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(panel1);
+        setPreferredSize(new Dimension(400, 124));
         pack();
+
         selectButton.addActionListener(new ActionListener() {
             /**
              * Invoked when an action occurs.
@@ -42,39 +49,45 @@ public class Browser extends JFrame {
 
             }
         });
-        episodeField.addActionListener(new ActionListener() {
-            /**
-             * Invoked when an action occurs.
-             */
-            public void actionPerformed(ActionEvent e) {
-                if (episodeField.getText().startsWith("http://www.gameone.de/tv/") && episodeField.getText().length() > 26) {
-                    String episodeNumber = episodeField.getText().substring(25);
 
-                    int i = 0;
-                    while (i < episodeNumber.length() && Character.isDigit(episodeNumber.charAt(i))) {
-                        i++;
-                    }
-
-                    if (i > 0) {
-                        episodeNumber = episodeNumber.substring(0, i);
-                        saveField.setText(saveField.getText().replace("XXX", episodeNumber));
-                        grabButton.setEnabled(true);
-                        episodeField.setEnabled(false);
-                    }
-                }
-            }
-        });
         grabButton.addActionListener(new ActionListener() {
             /**
              * Invoked when an action occurs.
              */
             public void actionPerformed(ActionEvent e) {
+                saveField.setText(saveField.getText().replace("XXX", episodeNumber));
                 saveField.setEnabled(false);
                 selectButton.setEnabled(false);
-
-                // TODO: start grabing
-
+                episodeSpinner.setEnabled(false);
                 grabButton.setEnabled(false);
+
+                Grabber g = new Grabber(episodeNumber, saveField.getText());
+                g.setVisible(true);
+
+                new Thread(g).start();
+
+                saveField.setEnabled(true);
+                selectButton.setEnabled(true);
+                episodeSpinner.setEnabled(true);
+                grabButton.setEnabled(true);
+            }
+        });
+
+        episodeSpinner.addChangeListener(new ChangeListener() {
+            /**
+             * Invoked when the target of the listener has changed its state.
+             *
+             * @param e a ChangeEvent object
+             */
+            public void stateChanged(ChangeEvent e) {
+                try {
+                   episodeNumber = String.valueOf((Integer) episodeSpinner.getValue());
+                    while (episodeNumber.length() < 3) {
+                        episodeNumber = "0" + episodeNumber;
+                    }
+                } catch (NumberFormatException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
     }
@@ -87,4 +100,7 @@ public class Browser extends JFrame {
         frame.setVisible(true);
     }
 
+    private void createUIComponents() {
+        episodeSpinner = new JSpinner(new SpinnerNumberModel(118, 102, 999, 1));
+    }
 }
