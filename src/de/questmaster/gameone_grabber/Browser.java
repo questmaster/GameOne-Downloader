@@ -7,6 +7,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,7 +28,13 @@ public class Browser extends JFrame {
     private JTextField rtmpLocationField;
     private JButton locateButton;
 
+    private final String RTMPDUMP_LOCATION = "rtmpdump.location";
+    private final String SAVE_PATH = "save.path";
+    private final String LAST_EPISODE = "last.episode";
+
+
     private String episodeNumber = "118";
+    private Properties p = new Properties();
 
     public Browser() {
         super("GameOne Grabber");
@@ -33,13 +43,26 @@ public class Browser extends JFrame {
         setPreferredSize(new Dimension(450, 184));
         pack();
 
+        // load properties
+        try {
+            p.load(new FileReader(new File(System.getProperty("user.home") + System.getProperty("file.separator") + ".GameOneGraber.properties")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // set loaded properties
+        saveField.setText(p.getProperty(SAVE_PATH, "./") + "GameOne-XXX");
+        episodeSpinner.setValue(Integer.valueOf(p.getProperty(LAST_EPISODE, "118")));
+
         // check for rtmpdump executable
-        File f = new File("rtmpdump.exe");
+        File f = new File(p.getProperty(RTMPDUMP_LOCATION, "rtmpdump.exe"));
         if (f.exists()) {
             rtmpLocationField.setText(f.getAbsolutePath());
             locateButton.setEnabled(false);
             selectButton.setEnabled(true);
             grabButton.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "RTMPdump executable not found. \nPlease select location of executable via 'Locate' button.\n You can download it from http://rtmpdump.mplayerhq.hu/.", "RTMPdump not found", JOptionPane.OK_OPTION);
         }
 
 
@@ -56,7 +79,9 @@ public class Browser extends JFrame {
                 chooser.setSelectedFile(new File(curPath));
                 int returnVal = chooser.showSaveDialog(panel1);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    saveField.setText(chooser.getSelectedFile().getAbsolutePath());
+                    File f = chooser.getSelectedFile();
+                    saveField.setText(f.getAbsolutePath());
+                    setProperty(SAVE_PATH, f.getPath());
                 }
             }
         });
@@ -74,6 +99,7 @@ public class Browser extends JFrame {
 
                 Grabber g = new Grabber(episodeNumber, saveField.getText(), rtmpLocationField.getText());
                 g.setVisible(true);
+                setProperty(LAST_EPISODE, episodeNumber);
 
                 new Thread(g).start();
 
@@ -117,6 +143,7 @@ public class Browser extends JFrame {
                     if (f.exists()) {
                         locateButton.setEnabled(false);
                         rtmpLocationField.setText(f.getAbsolutePath());
+                        setProperty(RTMPDUMP_LOCATION, f.getAbsolutePath());
                     }
                 }
             }
@@ -133,5 +160,17 @@ public class Browser extends JFrame {
 
     private void createUIComponents() {
         episodeSpinner = new JSpinner(new SpinnerNumberModel(118, 102, 999, 1));
+    }
+
+    private void setProperty (String name, String val) {
+        p.setProperty(name, val);
+        try {
+            File f = new File(System.getProperty("user.home") + System.getProperty("file.separator") + ".GameOneGraber.properties");
+            if (!f.exists())
+                f.createNewFile();
+            p.store(new FileWriter(f), "Properties of GameOne Grabber");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
