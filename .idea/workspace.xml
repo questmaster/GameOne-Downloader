@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b5f9e813-2c54-4b84-a5c6-2ba52460311d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts/GameOne_Grabber_jar.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Browser.java" afterPath="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Browser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Grabber.java" afterPath="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Grabber.java" />
     </list>
     <ignored path="GameOne-Grabber.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -69,10 +68,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Browser.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Browser.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Browser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="82" selection-start="1729" selection-end="1729" vertical-scroll-proportion="0.33213645">
+            <state line="127" column="41" selection-start="4913" selection-end="4913" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Grabber.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Grabber.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="139" column="19" selection-start="4161" selection-end="4161" vertical-scroll-proportion="0.750289">
               <folding />
             </state>
           </provider>
@@ -438,6 +446,7 @@
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="false" />
     <layout>
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2386503" sideWeight="0.67002237" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32997763" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20736197" sideWeight="0.67002237" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24969324" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -448,10 +457,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19877301" sideWeight="0.4395973" order="1" side_tool="true" content_ui="tabs" x="678" y="58" width="324" height="894" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32944787" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19877301" sideWeight="0.67002237" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19877301" sideWeight="0.6006711" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32997763" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2386503" sideWeight="0.38926175" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32997763" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -473,7 +481,7 @@
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="included config for rtmpdump location&#10;- fixed #40&#10;next: store last locations in properties" />
+    <option name="LAST_COMMIT_MESSAGE" value="included store last locations in properties&#10;- fixed #42&#10;" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -492,6 +500,7 @@
     <MESSAGE value="fixed some eye candy" />
     <MESSAGE value="fixed some eye candy&#10;- fixed #41" />
     <MESSAGE value="included config for rtmpdump location&#10;- fixed #40&#10;next: store last locations in properties" />
+    <MESSAGE value="included store last locations in properties&#10;- fixed #42&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -531,14 +540,16 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Grabber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="18" selection-start="828" selection-end="828" vertical-scroll-proportion="0.019653179" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Browser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="82" selection-start="1729" selection-end="1729" vertical-scroll-proportion="0.33213645">
+        <state line="127" column="41" selection-start="4913" selection-end="4913" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Grabber.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="139" column="19" selection-start="4161" selection-end="4161" vertical-scroll-proportion="0.750289">
           <folding />
         </state>
       </provider>

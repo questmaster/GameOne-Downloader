@@ -6,6 +6,8 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -28,16 +30,18 @@ public class Browser extends JFrame {
     private JTextField rtmpLocationField;
     private JButton locateButton;
 
-    private final String RTMPDUMP_LOCATION = "rtmpdump.location";
-    private final String SAVE_PATH = "save.path";
-    private final String LAST_EPISODE = "last.episode";
+    private static final String RTMPDUMP_LOCATION = "rtmpdump.location";
+    private static final String SAVE_PATH = "save.path";
+    private static final String LAST_EPISODE = "last.episode";
+    private static final String WIN_LOCATION_X = "window.location.x";
+    private static final String WIN_LOCATION_Y = "window.location.y";
 
-
+    private Component c = this;
     private String episodeNumber = "118";
     private Properties p = new Properties();
 
     public Browser() {
-        super("GameOne Grabber");
+        super("GameOne Grabber v0.1");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(panel1);
         setPreferredSize(new Dimension(450, 184));
@@ -51,13 +55,17 @@ public class Browser extends JFrame {
         }
 
         // set loaded properties
+        setLocation(Integer.parseInt(p.getProperty(WIN_LOCATION_X, "100")),
+                Integer.parseInt(p.getProperty(WIN_LOCATION_Y, "100")));
         saveField.setText(p.getProperty(SAVE_PATH, "./") + "GameOne-XXX");
-        episodeSpinner.setValue(Integer.valueOf(p.getProperty(LAST_EPISODE, "118")));
+        episodeNumber = p.getProperty(LAST_EPISODE, "118");
+        episodeSpinner.setValue(Integer.valueOf(episodeNumber));
 
         // check for rtmpdump executable
         File f = new File(p.getProperty(RTMPDUMP_LOCATION, "rtmpdump.exe"));
         if (f.exists()) {
             rtmpLocationField.setText(f.getAbsolutePath());
+            setProperty(RTMPDUMP_LOCATION, f.getAbsolutePath());
             locateButton.setEnabled(false);
             selectButton.setEnabled(true);
             grabButton.setEnabled(true);
@@ -67,6 +75,25 @@ public class Browser extends JFrame {
 
 
         // following are all the listeners...
+
+        this.addWindowListener(new WindowListener() {
+            public void windowOpened(WindowEvent e) {}
+
+            public void windowClosing(WindowEvent e) {
+                setProperty(WIN_LOCATION_X, String.valueOf(getX()));
+                setProperty(WIN_LOCATION_Y, String.valueOf(getY()));
+            }
+
+            public void windowClosed(WindowEvent e) {}
+
+            public void windowIconified(WindowEvent e) {}
+
+            public void windowDeiconified(WindowEvent e) {}
+
+            public void windowActivated(WindowEvent e) {}
+
+            public void windowDeactivated(WindowEvent e) {}
+        });
 
         selectButton.addActionListener(new ActionListener() {
             /**
@@ -81,7 +108,7 @@ public class Browser extends JFrame {
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File f = chooser.getSelectedFile();
                     saveField.setText(f.getAbsolutePath());
-                    setProperty(SAVE_PATH, f.getPath());
+                    setProperty(SAVE_PATH, f.getParent() + System.getProperty("file.separator"));
                 }
             }
         });
@@ -98,6 +125,7 @@ public class Browser extends JFrame {
                 grabButton.setEnabled(false);
 
                 Grabber g = new Grabber(episodeNumber, saveField.getText(), rtmpLocationField.getText());
+                g.setLocationRelativeTo(c);
                 g.setVisible(true);
                 setProperty(LAST_EPISODE, episodeNumber);
 

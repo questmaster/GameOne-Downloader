@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 public class Grabber extends JDialog implements Runnable {
@@ -20,6 +22,7 @@ public class Grabber extends JDialog implements Runnable {
     private String dumpLocation;
     private String rtmpDumpLocation;
     private Process pRtmpdump = null;
+    private BufferedReader br = null;
 
     public Grabber(String epNo, String loc, String rtmpdump) {
         setContentPane(contentPane);
@@ -66,11 +69,27 @@ public class Grabber extends JDialog implements Runnable {
     }
 
     private void onCancel() {
-        if (pRtmpdump != null)
+        if (br != null) {
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (pRtmpdump != null) {
             pRtmpdump.destroy();
+            try {
+                pRtmpdump.waitFor();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         File f = new File(dumpLocation);
-        if (f.exists())
+        if (f.exists()) {
             f.delete();
+        }
 
         dispose();
     }
@@ -100,9 +119,16 @@ public class Grabber extends JDialog implements Runnable {
 
         String sUrl = "http://www.gameone.de/tv/" + episodeNumber;
         dumpOutput.append("Grabbing data from URL: " + sUrl + "\n\n");
+        try {
+            Desktop.getDesktop().browse(new URI(sUrl));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
 
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(new URL(sUrl).openStream()));
+            br = new BufferedReader(new InputStreamReader(new URL(sUrl).openStream()));
 
             String line;
             while ((line = br.readLine()) != null) {
