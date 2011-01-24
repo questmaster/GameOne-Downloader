@@ -59,14 +59,15 @@ public class Grabber extends JDialog implements Runnable {
     }
 
     private void onOK() {
-        // add your code here
         dispose();
     }
 
     private void onCancel() {
-        // add your code here if necessary
         if (pRtmpdump != null)
             pRtmpdump.destroy();
+        File f = new File(dumpLocation);
+        if (f.exists())
+            f.delete();
 
         dispose();
     }
@@ -97,7 +98,7 @@ public class Grabber extends JDialog implements Runnable {
         String sUrl = "http://www.gameone.de/tv/" + episodeNumber;
         dumpOutput.append("Grabbing data from URL: " + sUrl + "\n\n");
 
-        try{
+        try {
             BufferedReader br = new BufferedReader(new InputStreamReader(new URL(sUrl).openStream()));
 
             String line;
@@ -181,7 +182,7 @@ public class Grabber extends JDialog implements Runnable {
         if (server && stream && embededSwf != null && magicWord != null) {
             if (magicWord.contains("gameone")) {
                 dumpLocation += "_" + streamUrl.substring(streamUrl.lastIndexOf("/") + 1);
-                dumpOutput.append("\nDumping Episode " + episodeNumber  + " to: " + dumpLocation + "\n\n");
+                dumpOutput.append("\nDumping Episode " + episodeNumber + " to: " + dumpLocation + "\n\n");
 
                 // call rtmpdump
                 try {
@@ -191,7 +192,8 @@ public class Grabber extends JDialog implements Runnable {
                             + "\" -p \"" + sUrl
                             + "\" -u \"" + magicWord
                             + "\"";
-*/                    ProcessBuilder pb = new ProcessBuilder("rtmpdump.exe",
+*/
+                    ProcessBuilder pb = new ProcessBuilder("rtmpdump.exe",
                             "-r", "\"" + streamUrl + "\"",
                             "-o", dumpLocation,
                             "-W", "\"" + embededSwf + "\"",
@@ -205,19 +207,25 @@ public class Grabber extends JDialog implements Runnable {
 
                     String line;
                     while ((line = br.readLine()) != null) {
-                        dumpOutput.append(line + "\n");
+/*                        if (line.length() > 0 && Character.isDigit(line.codePointAt(0))) {
+                                // TODO: remove last line
+                                String text = dumpOutput.getText();
+                                text.substring(0, text.lastIndexOf('\n', text.lastIndexOf('\n') - 1) + 1); // remove last line, keep \n
+                                dumpOutput.setText(text);
+                        }
+*/                        dumpOutput.append(line + "\n");
 
                         // show last line
                         dumpOutput.setCaretPosition(dumpOutput.getDocument().getLength());
 
-                         try {
+                        try {
                             int exit = pRtmpdump.exitValue();
-                            if (exit == 0)  {
+                            if (exit == 0) {
                                 // Process finished
                                 break;
                             }
                         } catch (IllegalThreadStateException t) {
-                            // Nothing todo
+                            // Nothing to do
                         }
                     }
                     br.close();

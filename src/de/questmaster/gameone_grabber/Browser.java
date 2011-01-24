@@ -66,6 +66,7 @@ public class Browser extends JFrame {
 
                 new Thread(g).start();
 
+                saveField.setText(saveField.getText().replace(episodeNumber, "XXX"));
                 saveField.setEnabled(true);
                 selectButton.setEnabled(true);
                 episodeSpinner.setEnabled(true);

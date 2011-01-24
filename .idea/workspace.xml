@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b5f9e813-2c54-4b84-a5c6-2ba52460311d" name="Default" comment="Minimal UI working&#10;next: param filters&#10;next: grabbing">
+    <list default="true" id="b5f9e813-2c54-4b84-a5c6-2ba52460311d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Browser.form" afterPath="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Browser.form" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Browser.java" afterPath="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Browser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Grabber.form" afterPath="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Grabber.form" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Grabber.java" afterPath="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Grabber.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Main.java" afterPath="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Main.java" />
     </list>
     <ignored path="GameOne-Grabber.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -69,7 +66,7 @@
       <file leaf-file-name="Browser.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Browser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="103" column="69" selection-start="3468" selection-end="3468" vertical-scroll-proportion="0.0">
+            <state line="68" column="82" selection-start="2279" selection-end="2279" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -85,7 +82,7 @@
       <file leaf-file-name="Grabber.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Grabber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="209" column="41" selection-start="7789" selection-end="7789" vertical-scroll-proportion="0.17192982">
+            <state line="215" column="2" selection-start="8149" selection-end="8149" vertical-scroll-proportion="0.51445085">
               <folding />
             </state>
           </provider>
@@ -108,8 +105,8 @@
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Main.java" />
         <option value="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Grabber.form" />
-        <option value="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Browser.java" />
         <option value="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Browser.form" />
+        <option value="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Browser.java" />
         <option value="$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Grabber.java" />
       </list>
     </option>
@@ -447,7 +444,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19877301" sideWeight="0.67002237" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32997763" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32997763" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -469,7 +466,7 @@
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minimal UI working&#10;next: param filters&#10;next: grabbing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Programm working&#10;next: properties like where is rtmpdump located&#10;next: fix filename after starting grabbing" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -484,6 +481,7 @@
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
     <MESSAGE value="Initial Commit" />
     <MESSAGE value="Minimal UI working&#10;next: param filters&#10;next: grabbing" />
+    <MESSAGE value="Programm working&#10;next: properties like where is rtmpdump located&#10;next: fix filename after starting grabbing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -505,11 +503,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Browser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="69" selection-start="3468" selection-end="3468" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Grabber.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Browser.form">
@@ -517,14 +513,16 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Grabber.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
+    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Browser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="68" column="82" selection-start="2279" selection-end="2279" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_grabber/Grabber.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="209" column="41" selection-start="7789" selection-end="7789" vertical-scroll-proportion="0.17192982">
+        <state line="215" column="2" selection-start="8149" selection-end="8149" vertical-scroll-proportion="0.51445085">
           <folding />
         </state>
       </provider>
