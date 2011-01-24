@@ -205,15 +205,23 @@ public class Grabber extends JDialog implements Runnable {
 
                     BufferedReader br = new BufferedReader(new InputStreamReader(pRtmpdump.getInputStream()));
 
+                    boolean first = true;
+                    int textLen = 0;
                     String line;
                     while ((line = br.readLine()) != null) {
-/*                        if (line.length() > 0 && Character.isDigit(line.codePointAt(0))) {
+                        if (line.length() > 0 && Character.isDigit(line.codePointAt(0))) {
+                            if (first) {
+                                textLen = dumpOutput.getText().length();
+                                first = false;
+                            } else {
                                 // TODO: remove last line
-                                String text = dumpOutput.getText();
-                                text.substring(0, text.lastIndexOf('\n', text.lastIndexOf('\n') - 1) + 1); // remove last line, keep \n
-                                dumpOutput.setText(text);
-                        }
-*/                        dumpOutput.append(line + "\n");
+                                dumpOutput.replaceRange(line, textLen, dumpOutput.getText().length());
+//                                String text = dumpOutput.getText();
+//                                text.substring(0, text.lastIndexOf('\n', text.lastIndexOf('\n') - 1) + 1); // remove last line, keep \n
+//                                dumpOutput.setText(text);
+                            }
+                        } else
+                            dumpOutput.append(line + "\n");
 
                         // show last line
                         dumpOutput.setCaretPosition(dumpOutput.getDocument().getLength());
