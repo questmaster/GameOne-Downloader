@@ -169,9 +169,11 @@ public class Browser extends JFrame {
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File f = chooser.getSelectedFile();
                     if (f.exists()) {
-                        locateButton.setEnabled(false);
                         rtmpLocationField.setText(f.getAbsolutePath());
                         setProperty(RTMPDUMP_LOCATION, f.getAbsolutePath());
+                        locateButton.setEnabled(false);
+                        selectButton.setEnabled(true);
+                        grabButton.setEnabled(true);
                     }
                 }
             }
