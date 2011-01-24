@@ -1,11 +1,12 @@
 package de.questmaster.gameone_grabber;
 
 import javax.swing.*;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -17,9 +18,10 @@ public class Grabber extends JDialog implements Runnable {
 
     private String episodeNumber;
     private String dumpLocation;
+    private String rtmpDumpLocation;
     private Process pRtmpdump = null;
 
-    public Grabber(String epNo, String loc) {
+    public Grabber(String epNo, String loc, String rtmpdump) {
         setContentPane(contentPane);
         getRootPane().setDefaultButton(buttonOK);
         setTitle("GameOne Episode " + epNo);
@@ -29,6 +31,7 @@ public class Grabber extends JDialog implements Runnable {
 
         episodeNumber = epNo;
         dumpLocation = loc;
+        rtmpDumpLocation = rtmpdump;
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -73,7 +76,7 @@ public class Grabber extends JDialog implements Runnable {
     }
 
     public static void main(String[] args) {
-        Grabber dialog = new Grabber("118", "./out.mp4");
+        Grabber dialog = new Grabber("118", "./out.mp4", "rtmpdump.exe");
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
@@ -171,7 +174,6 @@ public class Grabber extends JDialog implements Runnable {
                 br.close();
             }
         } catch (MalformedURLException e) {
-//            dumpOutput.append("Incorrect URL: " + sUrl + "\n");
             dumpOutput.append(e.getLocalizedMessage());
             e.printStackTrace();
         } catch (IOException e) {
@@ -186,20 +188,13 @@ public class Grabber extends JDialog implements Runnable {
 
                 // call rtmpdump
                 try {
-/*                    String cmdline =  "rtmpdump.exe -r \"" + streamUrl
-                            + "\" -o " + dumpLocation
-                            + " -W \"" + embededSwf
-                            + "\" -p \"" + sUrl
-                            + "\" -u \"" + magicWord
-                            + "\"";
-*/
-                    ProcessBuilder pb = new ProcessBuilder("rtmpdump.exe",
+                    ProcessBuilder pb = new ProcessBuilder(rtmpDumpLocation,
                             "-r", "\"" + streamUrl + "\"",
                             "-o", dumpLocation,
                             "-W", "\"" + embededSwf + "\"",
                             "-p", "\"" + sUrl + "\"",
                             "-u", "\"" + magicWord + "\"");
-                    pb.directory(new File("C:\\Users\\Daniel\\IdeaProjects\\GameOne-Grabber\\"));
+//                    pb.directory(new File("C:\\Users\\Daniel\\IdeaProjects\\GameOne-Grabber\\"));
                     pb.redirectErrorStream(true);
                     pRtmpdump = pb.start();
 
@@ -214,11 +209,8 @@ public class Grabber extends JDialog implements Runnable {
                                 textLen = dumpOutput.getText().length();
                                 first = false;
                             } else {
-                                // TODO: remove last line
+                                // remove last line
                                 dumpOutput.replaceRange(line, textLen, dumpOutput.getText().length());
-//                                String text = dumpOutput.getText();
-//                                text.substring(0, text.lastIndexOf('\n', text.lastIndexOf('\n') - 1) + 1); // remove last line, keep \n
-//                                dumpOutput.setText(text);
                             }
                         } else
                             dumpOutput.append(line + "\n");
