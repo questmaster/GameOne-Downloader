@@ -1,4 +1,4 @@
-package de.questmaster.gameone_grabber;
+package de.questmaster.gameone_downloader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +11,12 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.MessageFormat;
+import java.util.Locale;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 
-public class Grabber extends JDialog implements Runnable {
+public class Downloader extends JDialog implements Runnable {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -23,11 +27,12 @@ public class Grabber extends JDialog implements Runnable {
     private String rtmpDumpLocation;
     private Process pRtmpdump = null;
     private BufferedReader br = null;
+    private ResourceBundle resBundle = ResourceBundle.getBundle("de.questmaster.gameone_downloader.i18n");
 
-    public Grabber(String epNo, String loc, String rtmpdump) {
+    public Downloader(String epNo, String loc, String rtmpdump) {
         setContentPane(contentPane);
         getRootPane().setDefaultButton(buttonOK);
-        setTitle("GameOne Episode " + epNo);
+        setTitle(MessageFormat.format(resBundle.getString("downloader.gameone.episode"), epNo));
         setPreferredSize(new Dimension(800, 500));
         pack();
         setVisible(true);
@@ -95,7 +100,7 @@ public class Grabber extends JDialog implements Runnable {
     }
 
     public static void main(String[] args) {
-        Grabber dialog = new Grabber("118", "./out.mp4", "rtmpdump.exe");
+        Downloader dialog = new Downloader("118", "./out.mp4", "rtmpdump.exe");
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
@@ -118,7 +123,7 @@ public class Grabber extends JDialog implements Runnable {
         boolean server = false, stream = false;
 
         String sUrl = "http://www.gameone.de/tv/" + episodeNumber;
-        dumpOutput.append("Grabbing data from URL: " + sUrl + "\n\n");
+        dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.grabbing.data.from.url"), sUrl));
         try {
             Desktop.getDesktop().browse(new URI(sUrl));
         } catch (IOException e) {
@@ -139,7 +144,7 @@ public class Grabber extends JDialog implements Runnable {
                     out = line.indexOf(", ", in) - 1;
                     playListFile = "http://assets.gameone.de" + line.substring(in, out);
 
-                    dumpOutput.append("Found playlistfile: " + playListFile + "\n");
+                    dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.playlistfile"), playListFile));
                 }
 
                 // player URL
@@ -148,14 +153,14 @@ public class Grabber extends JDialog implements Runnable {
                     out = line.indexOf(", ", in) - 1;
                     embededSwf = line.substring(in, out);
 
-                    dumpOutput.append("Found embededSWF: " + embededSwf + "\n");
+                    dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.embededswf"), embededSwf));
 
                     // player magic word
                     in = out + 4;
                     out = line.indexOf(", ", in) - 1;
                     magicWord = line.substring(in, out);
 
-                    dumpOutput.append("Found magicWord: " + magicWord + "\n");
+                    dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.magicword"), magicWord));
                 }
             }
             br.close();
@@ -171,7 +176,7 @@ public class Grabber extends JDialog implements Runnable {
                         streamUrl = line.substring(in, out);
 
                         server = true;
-                        dumpOutput.append("Found server url: " + streamUrl + "\n");
+                        dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.server.url"), streamUrl));
                     }
 
                     if ((in = line.indexOf("hqv")) > -1) {
@@ -180,21 +185,21 @@ public class Grabber extends JDialog implements Runnable {
                         streamUrl += line.substring(in, out);
 
                         stream = true;
-                        dumpOutput.append("Found HQ stream url: " + streamUrl + "\n");
+                        dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.hq.stream.url"), streamUrl));
                     } else if ((in = line.indexOf("file\"")) > -1) {
                         in += 7;
                         out = line.indexOf(",", in) - 1;
                         streamUrl += line.substring(in, out);
 
                         stream = true;
-                        dumpOutput.append("Found SD stream url: " + streamUrl + "\n");
+                        dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.sd.stream.url"), streamUrl));
                     } else if ((in = line.indexOf("filename")) > -1) {
                         in += 11;
                         out = line.indexOf(",", in) - 1;
                         streamUrl += line.substring(in, out);
 
                         stream = true;
-                        dumpOutput.append("Found LQ/16:9 stream url: " + streamUrl + "\n");
+                        dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.lq.16.9.stream.url"), streamUrl));
                     }
                 }
                 br.close();
@@ -210,7 +215,7 @@ public class Grabber extends JDialog implements Runnable {
         if (server && stream && embededSwf != null && magicWord != null) {
             if (magicWord.contains("gameone")) {
                 dumpLocation += "_" + streamUrl.substring(streamUrl.lastIndexOf("/") + 1);
-                dumpOutput.append("\nDumping Episode " + episodeNumber + " to: " + dumpLocation + "\n\n");
+                dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.dumping.episode"), episodeNumber, dumpLocation));
 
                 // call rtmpdump
                 try {
@@ -220,7 +225,6 @@ public class Grabber extends JDialog implements Runnable {
                             "-W", "\"" + embededSwf + "\"",
                             "-p", "\"" + sUrl + "\"",
                             "-u", "\"" + magicWord + "\"");
-//                    pb.directory(new File("C:\\Users\\Daniel\\IdeaProjects\\GameOne-Grabber\\"));
                     pb.redirectErrorStream(true);
                     pRtmpdump = pb.start();
 
@@ -260,13 +264,13 @@ public class Grabber extends JDialog implements Runnable {
                     e.printStackTrace();
                 }
 
-                dumpOutput.append("\nExit value: " + pRtmpdump.exitValue() + "\nDone.\n");
+                dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.exit.value"), pRtmpdump.exitValue()));
                 buttonOK.setEnabled(true);
             } else {
-                dumpOutput.append("\nThe given episode does not exist. Stream of different episode was received.\nExiting.\n");
+                dumpOutput.append(resBundle.getString("downloader.episode.does.not.exist"));
             }
         } else {
-            dumpOutput.append("\nNot all information needed could be parsed.\nExiting.\n");
+            dumpOutput.append(resBundle.getString("downloader.not.all.information"));
         }
     }
 }

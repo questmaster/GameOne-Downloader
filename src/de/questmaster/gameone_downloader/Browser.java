@@ -1,4 +1,6 @@
-package de.questmaster.gameone_grabber;
+package de.questmaster.gameone_downloader;
+
+import com.sun.deploy.Environment;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -13,6 +15,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 
 /**
  * Created by IntelliJ IDEA.
@@ -39,17 +43,18 @@ public class Browser extends JFrame {
     private Component c = this;
     private String episodeNumber = "118";
     private Properties p = new Properties();
+    private ResourceBundle resBundle = ResourceBundle.getBundle("de.questmaster.gameone_downloader.i18n");
 
     public Browser() {
-        super("GameOne Grabber v0.1");
+        super("GameOne Downloader v0.1");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(panel1);
-        setPreferredSize(new Dimension(450, 184));
+        setPreferredSize(new Dimension(450, 154));
         pack();
 
         // load properties
         try {
-            p.load(new FileReader(new File(System.getProperty("user.home") + System.getProperty("file.separator") + ".GameOneGraber.properties")));
+            p.load(new FileReader(new File(System.getProperty("user.home") + System.getProperty("file.separator") + ".GameOneDownloader.properties")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,7 +75,7 @@ public class Browser extends JFrame {
             selectButton.setEnabled(true);
             grabButton.setEnabled(true);
         } else {
-            JOptionPane.showMessageDialog(this, "RTMPdump executable not found. \nPlease select location of executable via 'Locate' button.\n You can download it from http://rtmpdump.mplayerhq.hu/.", "RTMPdump not found", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(this, resBundle.getString("browser.rtmpdump.executable.not.found"), resBundle.getString("browser.rtmpdump.not.found"), JOptionPane.OK_OPTION);
         }
 
 
@@ -124,7 +129,7 @@ public class Browser extends JFrame {
                 episodeSpinner.setEnabled(false);
                 grabButton.setEnabled(false);
 
-                Grabber g = new Grabber(episodeNumber, saveField.getText(), rtmpLocationField.getText());
+                Downloader g = new Downloader(episodeNumber, saveField.getText(), rtmpLocationField.getText());
                 g.setLocationRelativeTo(c);
                 g.setVisible(true);
                 setProperty(LAST_EPISODE, episodeNumber);
@@ -195,10 +200,10 @@ public class Browser extends JFrame {
     private void setProperty (String name, String val) {
         p.setProperty(name, val);
         try {
-            File f = new File(System.getProperty("user.home") + System.getProperty("file.separator") + ".GameOneGraber.properties");
+            File f = new File(System.getProperty("user.home") + System.getProperty("file.separator") + ".GameOneDownloader.properties");
             if (!f.exists())
                 f.createNewFile();
-            p.store(new FileWriter(f), "Properties of GameOne Grabber");
+            p.store(new FileWriter(f), "Properties of GameOne Downloader");
         } catch (IOException e) {
             e.printStackTrace();
         }

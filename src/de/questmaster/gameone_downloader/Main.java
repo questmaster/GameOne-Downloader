@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-package de.questmaster.gameone_grabber;
+package de.questmaster.gameone_downloader;
 
 
 public class Main {
