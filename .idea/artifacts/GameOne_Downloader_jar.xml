@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="GameOne-Grabber:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/GameOne_Grabber_jar</output-path>
-    <root id="archive" name="GameOne_Grabber.jar">
+  <artifact type="jar" build-on-make="true" name="GameOne-Downloader:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/GameOne_Downloader_jar</output-path>
+    <root id="archive" name="GameOne_Downloader.jar">
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
       </element>

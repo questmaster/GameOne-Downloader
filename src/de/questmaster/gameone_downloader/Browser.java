@@ -20,7 +20,6 @@ import java.util.ResourceBundle;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Daniel
  * Date: 19.01.11
  * Time: 20:13
  * To change this template use File | Settings | File Templates.
