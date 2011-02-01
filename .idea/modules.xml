@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GameOne-Grabber.iml" filepath="$PROJECT_DIR$/GameOne-Grabber.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GameOne-Downloader.iml" filepath="$PROJECT_DIR$/GameOne-Downloader.iml" />
     </modules>
   </component>
 </project>

@@ -81,22 +81,28 @@ public class Browser extends JFrame {
         // following are all the listeners...
 
         this.addWindowListener(new WindowListener() {
-            public void windowOpened(WindowEvent e) {}
+            public void windowOpened(WindowEvent e) {
+            }
 
             public void windowClosing(WindowEvent e) {
                 setProperty(WIN_LOCATION_X, String.valueOf(getX()));
                 setProperty(WIN_LOCATION_Y, String.valueOf(getY()));
             }
 
-            public void windowClosed(WindowEvent e) {}
+            public void windowClosed(WindowEvent e) {
+            }
 
-            public void windowIconified(WindowEvent e) {}
+            public void windowIconified(WindowEvent e) {
+            }
 
-            public void windowDeiconified(WindowEvent e) {}
+            public void windowDeiconified(WindowEvent e) {
+            }
 
-            public void windowActivated(WindowEvent e) {}
+            public void windowActivated(WindowEvent e) {
+            }
 
-            public void windowDeactivated(WindowEvent e) {}
+            public void windowDeactivated(WindowEvent e) {
+            }
         });
 
         selectButton.addActionListener(new ActionListener() {
@@ -184,19 +190,19 @@ public class Browser extends JFrame {
         });
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Browser");
-        frame.setContentPane(new Browser().panel1);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        JFrame frame = new JFrame("Browser");
+//        frame.setContentPane(new Browser().panel1);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.pack();
+//        frame.setVisible(true);
+//    }
 
     private void createUIComponents() {
         episodeSpinner = new JSpinner(new SpinnerNumberModel(118, 102, 999, 1));
     }
 
-    private void setProperty (String name, String val) {
+    private void setProperty(String name, String val) {
         p.setProperty(name, val);
         try {
             File f = new File(System.getProperty("user.home") + System.getProperty("file.separator") + ".GameOneDownloader.properties");
@@ -207,4 +213,5 @@ public class Browser extends JFrame {
             e.printStackTrace();
         }
     }
+
 }

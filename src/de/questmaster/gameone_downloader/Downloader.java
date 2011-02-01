@@ -99,12 +99,12 @@ public class Downloader extends JDialog implements Runnable {
         dispose();
     }
 
-    public static void main(String[] args) {
-        Downloader dialog = new Downloader("118", "./out.mp4", "rtmpdump.exe");
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
+//    public static void main(String[] args) {
+//        Downloader dialog = new Downloader("118", "./out.mp4", "rtmpdump.exe");
+//        dialog.pack();
+//        dialog.setVisible(true);
+//        System.exit(0);
+//    }
 
     /**
      * When an object implementing interface <code>Runnable</code> is used
@@ -170,7 +170,6 @@ public class Downloader extends JDialog implements Runnable {
                 br = new BufferedReader(new InputStreamReader(new URL(playListFile).openStream()));
                 while ((line = br.readLine()) != null) {
 
-                    // stream config file
                     if ((in = line.indexOf("rtmp")) > -1) {
                         out = line.indexOf("}", in) - 1;
                         streamUrl = line.substring(in, out);
@@ -273,4 +272,5 @@ public class Downloader extends JDialog implements Runnable {
             dumpOutput.append(resBundle.getString("downloader.not.all.information"));
         }
     }
+
 }
