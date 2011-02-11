@@ -13,6 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package de.questmaster.gameone_downloader;
+
+import javax.swing.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,13 +23,6 @@
  * Time: 19:25
  * To change this template use File | Settings | File Templates.
  */
-
-package de.questmaster.gameone_downloader;
-
-
-import javax.swing.*;
-import java.awt.*;
-
 public class Main extends JApplet {
 
     private JApplet applet = this;

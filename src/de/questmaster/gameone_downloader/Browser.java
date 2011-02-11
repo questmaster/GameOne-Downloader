@@ -16,8 +16,6 @@
 
 package de.questmaster.gameone_downloader;
 
-import com.sun.deploy.Environment;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -31,7 +29,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
-import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 /**
@@ -61,7 +58,7 @@ public class Browser extends JFrame {
     private ResourceBundle resBundle = ResourceBundle.getBundle("de.questmaster.gameone_downloader.i18n");
 
     public Browser() {
-        super("GameOne Downloader v0.1");
+        super("GameOne Downloader v0.1.1");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(panel1);
         setPreferredSize(new Dimension(450, 154));

@@ -25,11 +25,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
-import java.util.Locale;
-import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 public class Downloader extends JDialog implements Runnable {
@@ -185,7 +182,7 @@ public class Downloader extends JDialog implements Runnable {
                 while ((line = br.readLine()) != null) {
 
                     if ((in = line.indexOf("rtmp")) > -1) {
-                        out = line.indexOf("}", in) - 1;
+                        out = line.indexOf(",", in) - 1;
                         streamUrl = line.substring(in, out);
 
                         server = true;
