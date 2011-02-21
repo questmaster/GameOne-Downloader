@@ -203,14 +203,6 @@ public class Browser extends JFrame {
         });
     }
 
-//    public static void main(String[] args) {
-//        JFrame frame = new JFrame("Browser");
-//        frame.setContentPane(new Browser().panel1);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.pack();
-//        frame.setVisible(true);
-//    }
-
     private void createUIComponents() {
         episodeSpinner = new JSpinner(new SpinnerNumberModel(118, 102, 999, 1));
     }

@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
@@ -112,13 +113,6 @@ public class Downloader extends JDialog implements Runnable {
         dispose();
     }
 
-//    public static void main(String[] args) {
-//        Downloader dialog = new Downloader("118", "./out.mp4", "rtmpdump.exe");
-//        dialog.pack();
-//        dialog.setVisible(true);
-//        System.exit(0);
-//    }
-
     /**
      * When an object implementing interface <code>Runnable</code> is used
      * to create a thread, starting the thread causes the object's
@@ -144,7 +138,10 @@ public class Downloader extends JDialog implements Runnable {
         }
 
         try {
-            br = new BufferedReader(new InputStreamReader(new URL(sUrl).openStream()));
+            // change user agent
+            URLConnection connection = new URL(sUrl).openConnection();
+            connection.addRequestProperty("User-Agent", "Opera/9.80 (Windows NT 6.1; U; de) Presto/2.7.62 Version/11.01");
+            br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
             String line;
             while ((line = br.readLine()) != null) {
@@ -152,7 +149,7 @@ public class Downloader extends JDialog implements Runnable {
                 // stream config file
                 if ((in = line.indexOf("playlistfile")) > -1) {
                     in += 15;
-                    out = line.indexOf(", ", in) - 1;
+                    out = line.indexOf("\"", in);
                     playListFile = "http://assets.gameone.de" + line.substring(in, out);
 
                     dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.playlistfile"), playListFile));
