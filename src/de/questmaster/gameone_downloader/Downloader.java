@@ -245,6 +245,12 @@ public class Downloader extends JDialog implements Runnable {
                     int textLen = 0;
                     String line;
                     while ((line = br.readLine()) != null) {
+                        // scroll to the end if on last position
+                        boolean scroll = false;
+                        if (dumpOutput.getCaretPosition() == dumpOutput.getDocument().getLength())
+                            scroll = true;
+
+                        // check to override download progress
                         if (line.length() > 0 && Character.isDigit(line.codePointAt(0))) {
                             if (first) {
                                 textLen = dumpOutput.getText().length();
@@ -257,6 +263,7 @@ public class Downloader extends JDialog implements Runnable {
                             dumpOutput.append(line + "\n");
 
                         // show last line
+                        if (scroll)
                         dumpOutput.setCaretPosition(dumpOutput.getDocument().getLength());
 
                         try {
