@@ -126,7 +126,7 @@ public class Downloader extends JDialog implements Runnable {
      */
     public void run() {
         int in, out;
-        String playListFile = null, embededSwf = null, magicWord = null, streamUrl = null;
+        String playListFile = null, embededSwf = null, magicWord = null, streamUrl = null, tcUrl = null;
         boolean server = false, stream = false;
 
         String sUrl = "http://www.gameone.de/tv/" + episodeNumber;
@@ -181,6 +181,7 @@ public class Downloader extends JDialog implements Runnable {
                     if ((in = line.indexOf("rtmp")) > -1) {
                         out = line.indexOf(",", in) - 1;
                         streamUrl = line.substring(in, out);
+                        tcUrl = line.substring(in, out);
 
                         server = true;
                         dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.server.url"), streamUrl));
@@ -233,7 +234,8 @@ public class Downloader extends JDialog implements Runnable {
                             "-o", dumpLocation,
                             "-W", "\"" + embededSwf + "\"",
                             "-p", "\"" + sUrl + "\"",
-                            "-u", "\"" + magicWord + "\"");
+                            "-u", "\"" + magicWord + "\"",
+                            "-t", "\"" + tcUrl + "\"");
                     pb.redirectErrorStream(true);
                     pRtmpdump = pb.start();
 
