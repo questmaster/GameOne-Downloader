@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b5f9e813-2c54-4b84-a5c6-2ba52460311d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Browser.java" afterPath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Browser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Downloader.java" afterPath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Downloader.java" />
     </list>
     <ignored path="GameOne-Downloader.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -68,10 +66,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Downloader.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Downloader.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Downloader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="137" column="0" selection-start="4349" selection-end="4349" vertical-scroll-proportion="0.42206654">
+            <state line="183" column="55" selection-start="6398" selection-end="6398" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Browser.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Browser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="60" column="40" selection-start="2112" selection-end="2112" vertical-scroll-proportion="0.39426523">
               <folding />
             </state>
           </provider>
@@ -100,8 +107,8 @@
         <option value="$PROJECT_DIR$/start.html" />
         <option value="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Main.java" />
         <option value="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Downloader.form" />
-        <option value="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Browser.java" />
         <option value="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Downloader.java" />
+        <option value="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Browser.java" />
       </list>
     </option>
   </component>
@@ -131,7 +138,7 @@
       </profile-state>
     </entry>
   </component>
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -157,6 +164,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -206,10 +214,6 @@
               <option name="myItemId" value="gameone_downloader" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Downloader" />
-              <option name="myItemType" value="com.intellij.uiDesigner.projectView.FormNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -228,12 +232,15 @@
               <option name="myItemId" value="gameone_downloader" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Browser" />
+              <option name="myItemType" value="com.intellij.uiDesigner.projectView.FormNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
       <pane id="PackagesPane" />
-      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -252,9 +259,9 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager" selected="Applet.Applet test">
     <configuration default="false" name="Main" type="Application" factoryName="Application" temporary="true">
@@ -291,24 +298,6 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -334,6 +323,24 @@
       <envs />
       <properties />
       <listeners />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -419,7 +426,6 @@
     <option name="USER" value="" />
     <option name="PASSWORD" value="" />
     <option name="LAST_MERGED_REVISION" />
-    <option name="UPDATE_RUN_STATUS" value="false" />
     <option name="MERGE_DRY_RUN" value="false" />
     <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
     <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
@@ -428,6 +434,7 @@
     <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
     <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
     <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
     <configuration useDefault="true">C:\Users\Daniel\AppData\Roaming\Subversion</configuration>
     <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
   </component>
@@ -497,8 +504,9 @@
     <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
+    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed parser for change in website" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed rtmp call for possible change in website" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -519,6 +527,7 @@
     <MESSAGE value="included config for rtmpdump location&#10;- fixed #40&#10;next: store last locations in properties" />
     <MESSAGE value="included store last locations in properties&#10;- fixed #42&#10;" />
     <MESSAGE value="fixed parser for change in website" />
+    <MESSAGE value="fixed rtmp call for possible change in website" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -587,14 +596,16 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Browser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="204" column="0" selection-start="7747" selection-end="7747" vertical-scroll-proportion="0.52112675" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Downloader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="137" column="0" selection-start="4349" selection-end="4349" vertical-scroll-proportion="0.42206654">
+        <state line="183" column="55" selection-start="6398" selection-end="6398" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Browser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="40" selection-start="2112" selection-end="2112" vertical-scroll-proportion="0.39426523">
           <folding />
         </state>
       </provider>
