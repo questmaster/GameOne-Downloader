@@ -126,7 +126,7 @@ public class Downloader extends JDialog implements Runnable {
      */
     public void run() {
         int in, out;
-        String playListFile = null, embededSwf = null, magicWord = null, streamUrl = null, tcUrl = null;
+        String playListFile = null, playListFileV2 = null, embededSwf = null, magicWord = null, streamUrl = null, tcUrl = null;
         boolean server = false, stream = false;
 
         String sUrl = "http://www.gameone.de/tv/" + episodeNumber;
@@ -146,13 +146,31 @@ public class Downloader extends JDialog implements Runnable {
             String line;
             while ((line = br.readLine()) != null) {
 
-                // stream config file
+                // stream v1 config file
                 if ((in = line.indexOf("playlistfile")) > -1) {
                     in += 15;
                     out = line.indexOf("\"", in);
                     playListFile = "http://assets.gameone.de" + line.substring(in, out);
 
                     dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.playlistfile"), playListFile));
+                }
+
+                // stream v2 config file
+                if (line.contains("controls=\"controls\"") && (in = line.indexOf("src=\"")) > -1) {
+                    in += 5;
+                    out = line.indexOf("\"", in);
+                    playListFileV2 = line.substring(in, out);
+
+                    dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.playlistfilev2"), playListFileV2));
+                }
+
+                // get v2 rtmp server
+                if ((in = line.indexOf("streamer")) > -1) {
+                    in += 11;
+                    out = line.indexOf("\"", in);
+                    tcUrl = line.substring(in, out);
+
+                    dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.server.url"), streamUrl));
                 }
 
                 // player URL
@@ -173,6 +191,7 @@ public class Downloader extends JDialog implements Runnable {
             }
             br.close();
 
+            // parse v1 playlistfile
             if (playListFile != null) {
                 // parse config file
                 br = new BufferedReader(new InputStreamReader(new URL(playListFile).openStream()));
@@ -212,6 +231,57 @@ public class Downloader extends JDialog implements Runnable {
                 }
                 br.close();
             }
+
+            // parse v2 playlist file
+            if (!(server && stream) && playListFileV2 != null) {
+                // check server
+                if (tcUrl != null) {
+                    streamUrl = tcUrl;
+                    server = true;
+                }
+
+                // parse config file
+                br = new BufferedReader(new InputStreamReader(new URL(playListFileV2).openStream()));
+                BufferedReader br2 = null;
+                while ((line = br.readLine()) != null) {
+                    if (line.contains("1264k")) { // TODO: check for other streams
+                        br2 = new BufferedReader(new InputStreamReader(new URL(line).openStream()));
+                        break;
+                    }
+                }
+                br.close();
+
+                String line2;
+                while ((line2 = br2.readLine()) != null) {
+
+                    if (line2.startsWith("http") && (in = line2.indexOf("/", 9)) > -1) {
+                        in += 1;
+                        out = line2.lastIndexOf("/") + 1;
+                        streamUrl += "riptide/" + line2.substring(in, out);
+                        streamUrl += "mp4_640px_1264k_m31_seg0_640x360_1150728.mp4"; // TODO: grab/build this somewhere!
+
+                        stream = true;
+                        dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.hq.stream.url"), streamUrl));
+                        break;
+                    } /*else if ((in = line.indexOf("file\"")) > -1) {
+                        in += 7;
+                        out = line.indexOf(",", in) - 1;
+                        streamUrl += line.substring(in, out);
+
+                        stream = true;
+                        dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.sd.stream.url"), streamUrl));
+                    } else if ((in = line.indexOf("filename")) > -1) {
+                        in += 11;
+                        out = line.indexOf(",", in) - 1;
+                        streamUrl += line.substring(in, out);
+
+                        stream = true;
+                        dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.lq.16.9.stream.url"), streamUrl));
+                    }   */
+                }
+                br2.close();
+
+            }
         } catch (MalformedURLException e) {
             dumpOutput.append(e.getLocalizedMessage());
             e.printStackTrace();
@@ -228,7 +298,7 @@ public class Downloader extends JDialog implements Runnable {
                 // call rtmpdump
                 try {
                     System.err.println("rtmpdump.exe -r \"" + streamUrl + "\" -o " + dumpLocation + " -W \"" + embededSwf + "\" -p \""
-                            + sUrl + "\" -u \"" + magicWord + "\"");
+                            + sUrl + "\" -u \"" + magicWord + "\" -t \"" + tcUrl + "\"");
                     ProcessBuilder pb = new ProcessBuilder(rtmpDumpLocation,
                             "-r", "\"" + streamUrl + "\"",
                             "-o", dumpLocation,
@@ -244,7 +314,7 @@ public class Downloader extends JDialog implements Runnable {
                     boolean first = true;
                     int textLen = 0;
                     String line;
-                    while ((line = br.readLine()) != null) {
+                    while ((line = br.readLine()) != null) { // TODO: fix scrolling
                         // scroll to the end if on last position
                         boolean scroll = false;
                         if (dumpOutput.getCaretPosition() == dumpOutput.getDocument().getLength())

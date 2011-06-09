@@ -58,7 +58,7 @@ public class Browser extends JFrame {
     private ResourceBundle resBundle = ResourceBundle.getBundle("de.questmaster.gameone_downloader.i18n");
 
     public Browser() {
-        super("GameOne Downloader v0.1.3");
+        super("GameOne Downloader v0.1.4");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(panel1);
         setPreferredSize(new Dimension(450, 154));
