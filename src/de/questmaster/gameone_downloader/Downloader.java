@@ -161,6 +161,9 @@ public class Downloader extends JDialog implements Runnable {
                     out = line.indexOf("\"", in);
                     playListFileV2 = line.substring(in, out);
 
+                    // cut file extension
+                    playListFileV2 = playListFileV2.substring(0, playListFileV2.lastIndexOf("."));
+
                     dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.playlistfilev2"), playListFileV2));
                 }
 
@@ -170,7 +173,9 @@ public class Downloader extends JDialog implements Runnable {
                     out = line.indexOf("\"", in);
                     tcUrl = line.substring(in, out);
 
-                    dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.server.url"), streamUrl));
+                    server = true;
+
+                    dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.server.url"), tcUrl));
                 }
 
                 // player URL
@@ -234,36 +239,20 @@ public class Downloader extends JDialog implements Runnable {
 
             // parse v2 playlist file
             if (!(server && stream) && playListFileV2 != null) {
-                // check server
-                if (tcUrl != null) {
-                    streamUrl = tcUrl;
-                    server = true;
-                }
 
                 // parse config file
                 br = new BufferedReader(new InputStreamReader(new URL(playListFileV2).openStream()));
-                BufferedReader br2 = null;
                 while ((line = br.readLine()) != null) {
-                    if (line.contains("1264k")) { // TODO: check for other streams
-                        br2 = new BufferedReader(new InputStreamReader(new URL(line).openStream()));
-                        break;
-                    }
-                }
-                br.close();
 
-                String line2;
-                while ((line2 = br2.readLine()) != null) {
-
-                    if (line2.startsWith("http") && (in = line2.indexOf("/", 9)) > -1) {
-                        in += 1;
-                        out = line2.lastIndexOf("/") + 1;
-                        streamUrl += "riptide/" + line2.substring(in, out);
-                        streamUrl += "mp4_640px_1264k_m31_seg0_640x360_1150728.mp4"; // TODO: grab/build this somewhere!
+                    if (line.contains("1264k")) {
+                        in = line.indexOf(">") + 1;
+                        out = line.lastIndexOf("<");
+                        streamUrl = line.substring(in, out);
 
                         stream = true;
                         dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.hq.stream.url"), streamUrl));
                         break;
-                    } /*else if ((in = line.indexOf("file\"")) > -1) {
+                    } /*else if ((in = line.indexOf("file\"")) > -1) {         // TODO: other qualities
                         in += 7;
                         out = line.indexOf(",", in) - 1;
                         streamUrl += line.substring(in, out);
@@ -279,7 +268,7 @@ public class Downloader extends JDialog implements Runnable {
                         dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.lq.16.9.stream.url"), streamUrl));
                     }   */
                 }
-                br2.close();
+                br.close();
 
             }
         } catch (MalformedURLException e) {
@@ -317,7 +306,7 @@ public class Downloader extends JDialog implements Runnable {
                     while ((line = br.readLine()) != null) { // TODO: fix scrolling
                         // scroll to the end if on last position
                         boolean scroll = false;
-                        if (dumpOutput.getCaretPosition() == dumpOutput.getDocument().getLength())
+                        if (dumpOutput.getCaretPosition() >= dumpOutput.getDocument().getLength()-2)
                             scroll = true;
 
                         // check to override download progress
