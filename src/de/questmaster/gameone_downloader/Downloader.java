@@ -23,10 +23,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.*;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
@@ -126,8 +123,8 @@ public class Downloader extends JDialog implements Runnable {
      */
     public void run() {
         int in, out;
-        String playListFile = null, playListFileV2 = null, embededSwf = null, magicWord = null, streamUrl = null, tcUrl = null;
-        boolean server = false, stream = false;
+        String playListFile = null, playListFileV2 = null, embededSwf = null, magicWord = null, streamUrl = null, tcUrl = null, httpURL = null;
+        boolean server = false, stream = false, skipRTMP = false;
 
         String sUrl = "http://www.gameone.de/tv/" + episodeNumber;
         dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.grabbing.data.from.url"), sUrl));
@@ -161,7 +158,11 @@ public class Downloader extends JDialog implements Runnable {
                     out = line.indexOf("\"", in);
                     playListFileV2 = line.substring(in, out);
 
-                    // cut file extension
+                    // check for content
+                    if (playListFileV2.endsWith("mp4")) {
+                        httpURL = playListFileV2;
+                    } else
+                    // cut file extension (m3u8)
                     playListFileV2 = playListFileV2.substring(0, playListFileV2.lastIndexOf("."));
 
                     dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.playlistfilev2"), playListFileV2));
@@ -196,8 +197,8 @@ public class Downloader extends JDialog implements Runnable {
             }
             br.close();
 
-            // parse v1 playlistfile
-            if (playListFile != null) {
+            // parse v1 playlistfile, if no http source
+            if (playListFile != null && httpURL == null) {
                 // parse config file
                 br = new BufferedReader(new InputStreamReader(new URL(playListFile).openStream()));
                 while ((line = br.readLine()) != null) {
@@ -237,8 +238,8 @@ public class Downloader extends JDialog implements Runnable {
                 br.close();
             }
 
-            // parse v2 playlist file
-            if (!(server && stream) && playListFileV2 != null) {
+            // parse v2 playlist file, if no http source
+            if (!(server && stream) && playListFileV2 != null && httpURL == null) {
 
                 // parse config file
                 br = new BufferedReader(new InputStreamReader(new URL(playListFileV2).openStream()));
@@ -270,6 +271,11 @@ public class Downloader extends JDialog implements Runnable {
                 }
                 br.close();
 
+                // get http stream
+                if (stream) {
+                    httpURL = "http://cdn.riptide-mtvn.com/" + streamUrl.substring(streamUrl.indexOf("r2"));
+                }
+
             }
         } catch (MalformedURLException e) {
             dumpOutput.append(e.getLocalizedMessage());
@@ -279,7 +285,22 @@ public class Downloader extends JDialog implements Runnable {
             e.printStackTrace();
         }
 
-        if (server && stream && embededSwf != null && magicWord != null) {
+        // http is more reliable so try this before rtmp
+        if (httpURL != null) {
+            try {
+                Desktop.getDesktop().browse(new URI(httpURL));
+
+                // success
+                dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.dumping.episode.http"), episodeNumber, httpURL));
+                skipRTMP = true;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        // rtmp fallback
+        if (!skipRTMP && server && stream && embededSwf != null && magicWord != null) {
             if (magicWord.contains("gameone")) {
                 dumpLocation += "_" + streamUrl.substring(streamUrl.lastIndexOf("/") + 1);
                 dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.dumping.episode"), episodeNumber, dumpLocation));
@@ -347,7 +368,11 @@ public class Downloader extends JDialog implements Runnable {
                 dumpOutput.append(resBundle.getString("downloader.episode.does.not.exist"));
             }
         } else {
-            dumpOutput.append(resBundle.getString("downloader.not.all.information"));
+            if (skipRTMP) {
+                dumpOutput.append(resBundle.getString("downloader.rtmp.skipped"));
+            } else {
+                dumpOutput.append(resBundle.getString("downloader.not.all.information"));
+            }
         }
     }
 
