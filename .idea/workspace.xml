@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b5f9e813-2c54-4b84-a5c6-2ba52460311d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Browser.java" afterPath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Browser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Downloader.java" afterPath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Downloader.java" />
     </list>
     <ignored path="GameOne-Downloader.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -543,7 +541,7 @@
     <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
     <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="add scroll control" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed new GameOne TV distribution method" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -566,6 +564,7 @@
     <MESSAGE value="fixed parser for change in website" />
     <MESSAGE value="fixed rtmp call for possible change in website" />
     <MESSAGE value="add scroll control" />
+    <MESSAGE value="fixed new GameOne TV distribution method" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
