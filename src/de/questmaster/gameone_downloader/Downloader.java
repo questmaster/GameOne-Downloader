@@ -16,13 +16,12 @@
 
 package de.questmaster.gameone_downloader;
 
+import de.questmaster.gameone_downloader.utils.JHelper;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.*;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
@@ -137,7 +136,7 @@ public class Downloader extends JDialog implements Runnable {
         try {
             // change user agent
             URLConnection connection = new URL(sUrl).openConnection();
-            connection.addRequestProperty("User-Agent", "Opera/9.80 (Windows NT 6.1; U; de) Presto/2.7.62 Version/11.01");
+            connection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20100101 Firefox/5.0");
             br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
             String line;
@@ -161,9 +160,9 @@ public class Downloader extends JDialog implements Runnable {
                     // check for content
                     if (playListFileV2.endsWith("mp4")) {
                         httpURL = playListFileV2;
-                    } else
-                    // cut file extension (m3u8)
-                    playListFileV2 = playListFileV2.substring(0, playListFileV2.lastIndexOf("."));
+                    } //else
+                    //// cut file extension (m3u8)
+                    //playListFileV2 = playListFileV2.substring(0, playListFileV2.lastIndexOf("."));
 
                     dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.playlistfilev2"), playListFileV2));
                 }
@@ -245,7 +244,7 @@ public class Downloader extends JDialog implements Runnable {
                 br = new BufferedReader(new InputStreamReader(new URL(playListFileV2).openStream()));
                 while ((line = br.readLine()) != null) {
 
-                    if (line.contains("1264k")) {
+                    if (line.contains("1264k")) {          // V2_1
                         in = line.indexOf(">") + 1;
                         out = line.lastIndexOf("<");
                         streamUrl = line.substring(in, out);
@@ -253,14 +252,18 @@ public class Downloader extends JDialog implements Runnable {
                         stream = true;
                         dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.hq.stream.url"), streamUrl));
                         break;
-                    } /*else if ((in = line.indexOf("file\"")) > -1) {         // TODO: other qualities
-                        in += 7;
-                        out = line.indexOf(",", in) - 1;
-                        streamUrl += line.substring(in, out);
+                    } else if (line.contains("hls.mtvnn.com/i/_!/riptide-mtvn") && !stream) {         // V2_2
+                        in = 0;
+                        out = line.indexOf(".csmil", in);
+                        streamUrl = line.substring(in, out); // Not really a stream URL, but I reuse the var
+
+                        // format URL
+                        streamUrl = streamUrl.replace(",.mp4", ".mp4");
+                        streamUrl = streamUrl.replace(streamUrl.substring(streamUrl.indexOf(","), streamUrl.lastIndexOf(",") + 1), "");
 
                         stream = true;
                         dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.sd.stream.url"), streamUrl));
-                    } else if ((in = line.indexOf("filename")) > -1) {
+                    } /*else if ((in = line.indexOf("filename")) > -1) {
                         in += 11;
                         out = line.indexOf(",", in) - 1;
                         streamUrl += line.substring(in, out);
@@ -288,11 +291,21 @@ public class Downloader extends JDialog implements Runnable {
         // http is more reliable so try this before rtmp
         if (httpURL != null) {
             try {
-                Desktop.getDesktop().browse(new URI(httpURL));
+                //Desktop.getDesktop().browse(new URI(httpURL));
+
+                // TODO: Progress dialog
+                dumpLocation += "_" + httpURL.substring(httpURL.lastIndexOf("/") + 1);
+                dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.dumping.episode.http"), episodeNumber, httpURL));
+
+                InputStream instream = new BufferedInputStream(new ProgressMonitorInputStream(contentPane,"Reading " + dumpLocation.substring(dumpLocation.lastIndexOf(System.getProperty("file.separator"))), new URL(httpURL).openStream()));
+                OutputStream outstream = new FileOutputStream(new File(dumpLocation));
+
+                JHelper.copyStream(512*1024, instream, outstream, true);
 
                 // success
-                dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.dumping.episode.http"), episodeNumber, httpURL));
                 skipRTMP = true;
+                dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.exit.value"), 0));
+                buttonOK.setEnabled(true);
 
             } catch (Exception e) {
                 e.printStackTrace();

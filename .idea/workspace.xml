@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b5f9e813-2c54-4b84-a5c6-2ba52460311d" name="Default" comment="add scroll control">
+    <list default="true" id="b5f9e813-2c54-4b84-a5c6-2ba52460311d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Browser.java" afterPath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Browser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Downloader.java" afterPath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Downloader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/i18n.properties" afterPath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/i18n.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/i18n_de.properties" afterPath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/i18n_de.properties" />
     </list>
     <ignored path="GameOne-Downloader.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,6 +28,21 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <line_breakpoints>
+      <breakpoint url="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Downloader.java" line="278" class="de.questmaster.gameone_downloader.Downloader" package="de.questmaster.gameone_downloader">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -73,9 +86,21 @@
       <file leaf-file-name="Downloader.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Downloader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="346" column="39" selection-start="14146" selection-end="14146" vertical-scroll-proportion="0.31213874">
+            <state line="330" column="66" selection-start="13714" selection-end="13714" vertical-scroll-proportion="0.5234375">
               <folding />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="i18n.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/i18n.properties">
+          <provider editor-type-id="text-editor">
+            <state line="42" column="96" selection-start="2141" selection-end="2141" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+          <provider selected="true" editor-type-id="ResourceBundle">
+            <state />
           </provider>
         </entry>
       </file>
@@ -101,9 +126,14 @@
         <option value="$PROJECT_DIR$/start.html" />
         <option value="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Main.java" />
         <option value="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Downloader.form" />
-        <option value="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Browser.java" />
-        <option value="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Downloader.java" />
         <option value="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/i18n.properties" />
+        <option value="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/ets.java" />
+        <option value="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/de/questmaster/gameone_downloader/utils/ets.java" />
+        <option value="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/de/questmaster/gameone_downloader/de.questmaster.gameone_downloader.utils/ets.java" />
+        <option value="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/de/questmaster/gameone_downloader/de.questmaster.gameone_downloader.utils/JHelper.java" />
+        <option value="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/utils/JHelper.java" />
+        <option value="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Downloader.java" />
+        <option value="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Browser.java" />
       </list>
     </option>
   </component>
@@ -159,8 +189,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Favorites" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -230,16 +258,18 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Resource Bundle 'i18n'" />
-              <option name="myItemType" value="com.intellij.lang.properties.projectView.ResourceBundleNode" />
+              <option name="myItemId" value="Browser" />
+              <option name="myItemType" value="com.intellij.uiDesigner.projectView.FormNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="SDKs" />
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="OverrideImplement.combined" value="true" />
@@ -443,7 +473,7 @@
     </task>
     <servers />
   </component>
-  <component name="TodoView" selected-index="0">
+  <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
       <are-packages-shown value="false" />
       <are-modules-shown value="false" />
@@ -464,23 +494,23 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
+    <frame x="-8" y="-8" width="1296" height="776" extended-state="6" />
     <editor active="false" />
     <layout>
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23821138" sideWeight="0.67002237" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32997763" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20736197" sideWeight="0.67002237" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20731707" sideWeight="0.67002237" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24969324" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24496645" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2872671" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32997763" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32997763" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1409396" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13975155" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19877301" sideWeight="0.4395973" order="1" side_tool="true" content_ui="tabs" x="678" y="58" width="324" height="894" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32944787" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20552148" sideWeight="0.75503355" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27235773" sideWeight="0.86024845" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19127516" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2386503" sideWeight="0.67002237" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19099379" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32997763" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -564,15 +594,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/i18n_de.properties">
-      <provider selected="true" editor-type-id="ResourceBundle">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state line="24" column="0" selection-start="1430" selection-end="1430" vertical-scroll-proportion="0.0" />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Browser.form">
-      <provider selected="true" editor-type-id="ui-designer">
+      <provider selected="true" editor-type-id="ResourceBundle">
         <state />
       </provider>
     </entry>
@@ -586,39 +611,51 @@
         <state line="18" column="0" selection-start="756" selection-end="756" vertical-scroll-proportion="0.5614679" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="44" selection-start="696" selection-end="696" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Downloader.form">
       <provider selected="true" editor-type-id="ui-designer">
         <state />
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.6.0_24/src.zip!/java/lang/Object.java">
+    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/utils/JHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="364" column="29" selection-start="17894" selection-end="17894" vertical-scroll-proportion="0.33267716" />
+        <state line="197" column="9" selection-start="5736" selection-end="5736" vertical-scroll-proportion="0.63309354" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Browser.java">
+    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/utils/ProgressMonitorETAInputStream.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="40" selection-start="2112" selection-end="2112" vertical-scroll-proportion="0.019953052" />
+        <state line="42" column="0" selection-start="950" selection-end="1236" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/i18n.properties">
-      <provider selected="true" editor-type-id="ResourceBundle">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state line="42" column="96" selection-start="2141" selection-end="2141" vertical-scroll-proportion="0.0">
+    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="44" selection-start="696" selection-end="696" vertical-scroll-proportion="-0.07804878">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Browser.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Browser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="40" selection-start="2112" selection-end="2112" vertical-scroll-proportion="0.028239202">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/i18n.properties">
+      <provider editor-type-id="text-editor">
+        <state line="42" column="96" selection-start="2141" selection-end="2141" vertical-scroll-proportion="0.0" />
+      </provider>
+      <provider selected="true" editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/Downloader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="346" column="39" selection-start="14146" selection-end="14146" vertical-scroll-proportion="0.31213874">
+        <state line="330" column="66" selection-start="13714" selection-end="13714" vertical-scroll-proportion="0.5234375">
           <folding />
         </state>
       </provider>
