@@ -16,7 +16,7 @@
 
 package de.questmaster.gameone_downloader;
 
-import de.questmaster.gameone_downloader.utils.JHelper;
+import de.questmaster.gameone_downloader.utils.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -122,7 +122,7 @@ public class Downloader extends JDialog implements Runnable {
      */
     public void run() {
         int in, out;
-        String playListFile = null, playListFileV2 = null, embededSwf = null, magicWord = null, streamUrl = null, tcUrl = null, httpURL = null;
+        String playListFile = null, playListFileV2 = null, playListFileV3Id = null, embededSwf = null, magicWord = null, streamUrl = null, tcUrl = null, httpURL = null;
         boolean server = false, stream = false, skipRTMP = false;
 
         String sUrl = "http://www.gameone.de/tv/" + episodeNumber;
@@ -176,6 +176,17 @@ public class Downloader extends JDialog implements Runnable {
                     server = true;
 
                     dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.server.url"), tcUrl));
+                }
+
+                // get v3 rtmp-id
+                if ((in = line.indexOf("riptide_video_id")) > -1) {
+                    in += 19;
+                    out = line.indexOf("\"", in);
+                    playListFileV3Id = line.substring(in, out);
+
+                    server = true;
+
+                    dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.playlistid"), playListFileV3Id));
                 }
 
                 // player URL
@@ -271,6 +282,45 @@ public class Downloader extends JDialog implements Runnable {
                         stream = true;
                         dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.lq.16.9.stream.url"), streamUrl));
                     }   */
+                }
+                br.close();
+                // get http stream
+                if (stream) {
+                    httpURL = "http://cdn.riptide-mtvn.com/" + streamUrl.substring(streamUrl.indexOf("r2"));
+                }
+
+            }
+
+            // parse v3 playlist file, if no http source
+            if (!(server && stream) && playListFileV3Id != null && httpURL == null) {
+
+                // parse config file
+                br = new BufferedReader(new InputStreamReader(new URL("http://videos.mtvnn.com/mediagen/" + playListFileV3Id).openStream()));
+                while ((line = br.readLine()) != null) {
+
+                    if (line.contains("640px")) {          // V2_1
+                        in = line.indexOf(">") + 1;
+                        out = line.lastIndexOf("<");
+                        streamUrl = line.substring(in, out);
+
+                        stream = true;
+                        dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.hq.stream.url"), streamUrl));
+                        break;
+                    } else if (line.contains("576k")) {
+                        in = line.indexOf(">") + 1;
+                        out = line.lastIndexOf("<");
+                        streamUrl = line.substring(in, out);
+
+                        stream = true;
+                        dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.sd.stream.url"), streamUrl));
+                    } else if (line.contains("160k")) {
+                        in = line.indexOf(">") + 1;
+                        out = line.lastIndexOf("<");
+                        streamUrl = line.substring(in, out);
+
+                        stream = true;
+                        dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.lq.16.9.stream.url"), streamUrl));
+                   }
                 }
                 br.close();
 
