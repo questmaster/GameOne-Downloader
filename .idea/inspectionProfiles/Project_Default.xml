@@ -39,6 +39,7 @@
       <option name="ignoreThrowableArguments" value="false" />
       <option name="ignoreConstantInitializers" value="false" />
       <option name="ignoreInTestCode" value="false" />
+      <option name="ignoreInToString" value="false" />
     </inspection_tool>
     <inspection_tool class="StringEquals" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="StringEqualsIgnoreCase" enabled="true" level="WARNING" enabled_by_default="true" />
