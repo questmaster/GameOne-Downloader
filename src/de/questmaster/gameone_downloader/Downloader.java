@@ -207,6 +207,26 @@ public class Downloader extends JDialog implements Runnable {
             }
             br.close();
 
+            // Nothing found? try media rss
+            if (playListFile == null && playListFileV2 == null && playListFileV3Id == null) {
+                String mrssUrl = "http://www.gameone.de/api/mrss/mgid:gameone:video:mtvnn.com:tv_show-" + episodeNumber;
+                br = new BufferedReader(new InputStreamReader(new URL(mrssUrl).openStream()));
+                while ((line = br.readLine()) != null) {
+
+                    // get v3_1 rtmp-id
+                    if ((in = line.indexOf("mediagen")) > -1) {
+                        in += 9;
+                        out = line.indexOf("?", in);
+                        playListFileV3Id = line.substring(in, out);
+
+                        server = true;
+
+                        dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.playlistid"), playListFileV3Id));
+                    }
+
+                }
+            }
+
             // parse v1 playlistfile, if no http source
             if (playListFile != null && httpURL == null) {
                 // parse config file
@@ -298,7 +318,7 @@ public class Downloader extends JDialog implements Runnable {
                 br = new BufferedReader(new InputStreamReader(new URL("http://videos.mtvnn.com/mediagen/" + playListFileV3Id).openStream()));
                 while ((line = br.readLine()) != null) {
 
-                    if (line.contains("640px")) {          // V2_1
+                    if (line.contains("640px")) {          // V3
                         in = line.indexOf(">") + 1;
                         out = line.lastIndexOf("<");
                         streamUrl = line.substring(in, out);
@@ -306,21 +326,43 @@ public class Downloader extends JDialog implements Runnable {
                         stream = true;
                         dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.hq.stream.url"), streamUrl));
                         break;
-                    } else if (line.contains("576k")) {
+                    } else if (line.contains("webxl")) {          // V3_1
+                        in = line.indexOf(">") + 1;
+                        out = line.lastIndexOf("<");
+                        streamUrl = line.substring(in, out);
+
+                        stream = true;
+                        dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.hq.stream.url"), streamUrl));
+                        break;
+                    } else if (line.contains("576k")) {          // V3
                         in = line.indexOf(">") + 1;
                         out = line.lastIndexOf("<");
                         streamUrl = line.substring(in, out);
 
                         stream = true;
                         dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.sd.stream.url"), streamUrl));
-                    } else if (line.contains("160k")) {
+                    } else if (line.contains("webl")) {          // V3_1
+                        in = line.indexOf(">") + 1;
+                        out = line.lastIndexOf("<");
+                        streamUrl = line.substring(in, out);
+
+                        stream = true;
+                        dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.sd.stream.url"), streamUrl));
+                    } else if (line.contains("160k")) {          // V3
                         in = line.indexOf(">") + 1;
                         out = line.lastIndexOf("<");
                         streamUrl = line.substring(in, out);
 
                         stream = true;
                         dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.lq.16.9.stream.url"), streamUrl));
-                   }
+                   } else if (line.contains("webm")) {          // V3_1
+                        in = line.indexOf(">") + 1;
+                        out = line.lastIndexOf("<");
+                        streamUrl = line.substring(in, out);
+
+                        stream = true;
+                        dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.found.lq.16.9.stream.url"), streamUrl));
+                    }
                 }
                 br.close();
 
@@ -364,7 +406,7 @@ public class Downloader extends JDialog implements Runnable {
 
         // rtmp fallback
         if (!skipRTMP && server && stream && embededSwf != null && magicWord != null) {
-            if (magicWord.contains("gameone")) {
+            if (magicWord.contains("gameone") || magicWord.contains("container")) {
                 dumpLocation += "_" + streamUrl.substring(streamUrl.lastIndexOf("/") + 1);
                 dumpOutput.append(MessageFormat.format(resBundle.getString("downloader.dumping.episode"), episodeNumber, dumpLocation));
 
