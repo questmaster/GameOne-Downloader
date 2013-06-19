@@ -21,7 +21,7 @@ import javax.swing.*;
  * Created by IntelliJ IDEA.
  * Date: 19.01.11
  * Time: 19:25
- * To change this template use File | Settings | File Templates.
+ * To change this template use File | SettingsImpl | File Templates.
  */
 public class Main extends JApplet {
 

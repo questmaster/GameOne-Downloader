@@ -25,17 +25,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 /**
  * Created by IntelliJ IDEA.
  * Date: 19.01.11
  * Time: 20:13
- * To change this template use File | Settings | File Templates.
+ * To change this template use File | SettingsImpl | File Templates.
  */
 public class Browser extends JFrame {
     private JPanel panel1;
@@ -46,15 +42,9 @@ public class Browser extends JFrame {
     private JTextField rtmpLocationField;
     private JButton locateButton;
 
-    private static final String RTMPDUMP_LOCATION = "rtmpdump.location";
-    private static final String SAVE_PATH = "save.path";
-    private static final String LAST_EPISODE = "last.episode";
-    private static final String WIN_LOCATION_X = "window.location.x";
-    private static final String WIN_LOCATION_Y = "window.location.y";
-
     private Component c = this;
     private String episodeNumber = "118";
-    private Properties p = new Properties();
+    private Settings p = null;
     private ResourceBundle resBundle = ResourceBundle.getBundle("de.questmaster.gameone_downloader.i18n");
 
     public Browser() {
@@ -64,25 +54,20 @@ public class Browser extends JFrame {
         setPreferredSize(new Dimension(450, 154));
         pack();
 
-        // load properties
-        try {
-            p.load(new FileReader(new File(System.getProperty("user.home") + System.getProperty("file.separator") + ".GameOneDownloader.properties")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        SettingsImpl.setSettingsFile(System.getProperty("user.home") + System.getProperty("file.separator") + ".GameOneDownloader.properties");
+        p = SettingsImpl.createSettings();
 
         // set loaded properties
-        setLocation(Integer.parseInt(p.getProperty(WIN_LOCATION_X, "100")),
-                Integer.parseInt(p.getProperty(WIN_LOCATION_Y, "100")));
-        saveField.setText(p.getProperty(SAVE_PATH, "./") + "GameOne-XXX");
-        episodeNumber = p.getProperty(LAST_EPISODE, "118");
+        setLocation(p.getWindowLocation().width, p.getWindowLocation().height);
+        saveField.setText(p.getSaveLocation());
+        episodeNumber = p.getLastEpisode();
         episodeSpinner.setValue(Integer.valueOf(episodeNumber));
 
         // check for rtmpdump executable
-        File f = new File(p.getProperty(RTMPDUMP_LOCATION, "rtmpdump.exe"));
+        File f = new File(p.getRTMPdumpLocation());
         if (f.exists()) {
             rtmpLocationField.setText(f.getAbsolutePath());
-            setProperty(RTMPDUMP_LOCATION, f.getAbsolutePath());
+            p.setRTMPdumpLocation(f.getAbsolutePath());
             locateButton.setEnabled(false);
             selectButton.setEnabled(true);
             grabButton.setEnabled(true);
@@ -98,8 +83,7 @@ public class Browser extends JFrame {
             }
 
             public void windowClosing(WindowEvent e) {
-                setProperty(WIN_LOCATION_X, String.valueOf(getX()));
-                setProperty(WIN_LOCATION_Y, String.valueOf(getY()));
+                p.setWindowLocation(new Dimension(getX(), getY()));
             }
 
             public void windowClosed(WindowEvent e) {
@@ -131,7 +115,7 @@ public class Browser extends JFrame {
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File f = chooser.getSelectedFile();
                     saveField.setText(f.getAbsolutePath());
-                    setProperty(SAVE_PATH, f.getParent() + System.getProperty("file.separator"));
+                    p.setSaveLocation(f.getParent() + System.getProperty("file.separator"));
                 }
             }
         });
@@ -150,7 +134,7 @@ public class Browser extends JFrame {
                 Downloader g = new Downloader(episodeNumber, saveField.getText(), rtmpLocationField.getText());
                 g.setLocationRelativeTo(c);
                 g.setVisible(true);
-                setProperty(LAST_EPISODE, episodeNumber);
+                p.setLastEpisode(episodeNumber);
 
                 new Thread(g).start();
 
@@ -193,7 +177,7 @@ public class Browser extends JFrame {
                     File f = chooser.getSelectedFile();
                     if (f.exists()) {
                         rtmpLocationField.setText(f.getAbsolutePath());
-                        setProperty(RTMPDUMP_LOCATION, f.getAbsolutePath());
+                        p.setRTMPdumpLocation(f.getAbsolutePath());
                         locateButton.setEnabled(false);
                         selectButton.setEnabled(true);
                         grabButton.setEnabled(true);
@@ -207,16 +191,5 @@ public class Browser extends JFrame {
         episodeSpinner = new JSpinner(new SpinnerNumberModel(118, 102, 999, 1));
     }
 
-    private void setProperty(String name, String val) {
-        p.setProperty(name, val);
-        try {
-            File f = new File(System.getProperty("user.home") + System.getProperty("file.separator") + ".GameOneDownloader.properties");
-            if (!f.exists())
-                f.createNewFile();
-            p.store(new FileWriter(f), "Properties of GameOne Downloader");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 }
