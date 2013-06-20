@@ -61,7 +61,7 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
         boolean server = false, stream = false, skipRTMP = false;
 
         String sUrl = "http://www.gameone.de/tv/" + episodeNumber;
-        mProcessData.append(MessageFormat.format(resBundle.getString("downloader.grabbing.data.from.url"), sUrl));
+        appendParserOutput(MessageFormat.format(resBundle.getString("downloader.grabbing.data.from.url"), sUrl));
         try {
             Desktop.getDesktop().browse(new URI(sUrl));
         } catch (Exception e) {
@@ -83,7 +83,7 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
                     out = line.indexOf("\"", in);
                     playListFile = "http://assets.gameone.de" + line.substring(in, out);
 
-                    mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.playlistfile"), playListFile));
+                    appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.playlistfile"), playListFile));
                 }
 
                 // stream v2 config file
@@ -99,7 +99,7 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
                     //// cut file extension (m3u8)
                     //playListFileV2 = playListFileV2.substring(0, playListFileV2.lastIndexOf("."));
 
-                    mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.playlistfilev2"), playListFileV2));
+                    appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.playlistfilev2"), playListFileV2));
                 }
 
                 // get v2 rtmp server
@@ -110,7 +110,7 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
 
                     server = true;
 
-                    mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.server.url"), tcUrl));
+                    appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.server.url"), tcUrl));
                 }
 
                 // get v3 rtmp-id
@@ -121,7 +121,7 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
 
                     server = true;
 
-                    mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.playlistid"), playListFileV3Id));
+                    appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.playlistid"), playListFileV3Id));
                 }
 
                 // player URL
@@ -130,14 +130,14 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
                     out = line.indexOf(", ", in) - 1;
                     embededSwf = line.substring(in, out);
 
-                    mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.embededswf"), embededSwf));
+                    appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.embededswf"), embededSwf));
 
                     // player magic word
                     in = out + 4;
                     out = line.indexOf(", ", in) - 1;
                     magicWord = line.substring(in, out);
 
-                    mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.magicword"), magicWord));
+                    appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.magicword"), magicWord));
                 }
             }
             br.close();
@@ -156,7 +156,7 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
 
                         server = true;
 
-                        mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.playlistid"), playListFileV3Id));
+                        appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.playlistid"), playListFileV3Id));
                     }
 
                 }
@@ -176,7 +176,7 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
                         tcUrl = line.substring(in, out);
 
                         server = true;
-                        mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.server.url"), streamUrl));
+                        appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.server.url"), streamUrl));
                     }
 
                     if ((in = line.indexOf("hqv")) > -1) {
@@ -185,21 +185,21 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
                         streamUrl += line.substring(in, out);
 
                         stream = true;
-                        mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.hq.stream.url"), streamUrl));
+                        appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.hq.stream.url"), streamUrl));
                     } else if ((in = line.indexOf("file\"")) > -1) {
                         in += 7;
                         out = line.indexOf(",", in) - 1;
                         streamUrl += line.substring(in, out);
 
                         stream = true;
-                        mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.sd.stream.url"), streamUrl));
+                        appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.sd.stream.url"), streamUrl));
                     } else if ((in = line.indexOf("filename")) > -1) {
                         in += 11;
                         out = line.indexOf(",", in) - 1;
                         streamUrl += line.substring(in, out);
 
                         stream = true;
-                        mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.lq.16.9.stream.url"), streamUrl));
+                        appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.lq.16.9.stream.url"), streamUrl));
                     }
                 }
                 br.close();
@@ -218,7 +218,7 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
                         streamUrl = line.substring(in, out);
 
                         stream = true;
-                        mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.hq.stream.url"), streamUrl));
+                        appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.hq.stream.url"), streamUrl));
                         break;
                     } else if (line.contains("hls.mtvnn.com/i/_!/riptide-mtvn") && !stream) {         // V2_2
                         in = 0;
@@ -230,14 +230,14 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
                         streamUrl = streamUrl.replace(streamUrl.substring(streamUrl.indexOf(","), streamUrl.lastIndexOf(",") + 1), "");
 
                         stream = true;
-                        mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.sd.stream.url"), streamUrl));
+                        appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.sd.stream.url"), streamUrl));
                     } /*else if ((in = line.indexOf("filename")) > -1) {
                         in += 11;
                         out = line.indexOf(",", in) - 1;
                         streamUrl += line.substring(in, out);
 
                         stream = true;
-                        mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.lq.16.9.stream.url"), streamUrl));
+                        appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.lq.16.9.stream.url"), streamUrl));
                     }   */
                 }
                 br.close();
@@ -261,7 +261,7 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
                         streamUrl = line.substring(in, out);
 
                         stream = true;
-                        mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.hq.stream.url"), streamUrl));
+                        appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.hq.stream.url"), streamUrl));
                         break;
                     } else if (line.contains("webxl")) {          // V3_1
                         in = line.indexOf(">") + 1;
@@ -269,7 +269,7 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
                         streamUrl = line.substring(in, out);
 
                         stream = true;
-                        mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.hq.stream.url"), streamUrl));
+                        appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.hq.stream.url"), streamUrl));
                         break;
                     } else if (line.contains("576k")) {          // V3
                         in = line.indexOf(">") + 1;
@@ -277,28 +277,28 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
                         streamUrl = line.substring(in, out);
 
                         stream = true;
-                        mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.sd.stream.url"), streamUrl));
+                        appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.sd.stream.url"), streamUrl));
                     } else if (line.contains("webl")) {          // V3_1
                         in = line.indexOf(">") + 1;
                         out = line.lastIndexOf("<");
                         streamUrl = line.substring(in, out);
 
                         stream = true;
-                        mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.sd.stream.url"), streamUrl));
+                        appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.sd.stream.url"), streamUrl));
                     } else if (line.contains("160k")) {          // V3
                         in = line.indexOf(">") + 1;
                         out = line.lastIndexOf("<");
                         streamUrl = line.substring(in, out);
 
                         stream = true;
-                        mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.lq.16.9.stream.url"), streamUrl));
+                        appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.lq.16.9.stream.url"), streamUrl));
                     } else if (line.contains("webm")) {          // V3_1
                         in = line.indexOf(">") + 1;
                         out = line.lastIndexOf("<");
                         streamUrl = line.substring(in, out);
 
                         stream = true;
-                        mProcessData.append(MessageFormat.format(resBundle.getString("downloader.found.lq.16.9.stream.url"), streamUrl));
+                        appendParserOutput(MessageFormat.format(resBundle.getString("downloader.found.lq.16.9.stream.url"), streamUrl));
                     }
                 }
                 br.close();
@@ -310,10 +310,10 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
 
             }
         } catch (MalformedURLException e) {
-            mProcessData.append(e.getLocalizedMessage());
+            appendParserOutput(e.getLocalizedMessage());
             e.printStackTrace();
         } catch (IOException e) {
-            mProcessData.append(e.getLocalizedMessage());
+            appendParserOutput(e.getLocalizedMessage());
             e.printStackTrace();
         }
 
@@ -324,7 +324,7 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
 
                 // TODO: Progress dialog
                 dumpLocation += "_" + httpURL.substring(httpURL.lastIndexOf("/") + 1);
-                mProcessData.append(MessageFormat.format(resBundle.getString("downloader.dumping.episode.http"), episodeNumber, httpURL));
+                appendParserOutput(MessageFormat.format(resBundle.getString("downloader.dumping.episode.http"), episodeNumber, httpURL));
 
                 InputStream instream = new BufferedInputStream(new URL(httpURL).openStream());
                 OutputStream outstream = new FileOutputStream(new File(dumpLocation));
@@ -333,7 +333,7 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
 
                 // success
                 skipRTMP = true;
-                mProcessData.append(MessageFormat.format(resBundle.getString("downloader.exit.value"), 0));
+                appendParserOutput(MessageFormat.format(resBundle.getString("downloader.exit.value"), 0));
                 mDownloadFinished = true;
 
             } catch (Exception e) {
@@ -348,7 +348,7 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
         if (!skipRTMP && server && stream && embededSwf != null && magicWord != null) {
             if (magicWord.contains("gameone") || magicWord.contains("container")) {
                 dumpLocation += "_" + streamUrl.substring(streamUrl.lastIndexOf("/") + 1);
-                mProcessData.append(MessageFormat.format(resBundle.getString("downloader.dumping.episode"), episodeNumber, dumpLocation));
+                appendParserOutput(MessageFormat.format(resBundle.getString("downloader.dumping.episode"), episodeNumber, dumpLocation));
 
                 // call rtmpdump
                 try {
@@ -381,7 +381,7 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
                                 mProcessData.replace(textLen, mProcessData.length(), line);
                             }
                         } else
-                            mProcessData.append(line + "\n");
+                            appendParserOutput(line + "\n");
 
                         try {
                             int exit = pRtmpdump.exitValue();
@@ -399,18 +399,23 @@ public class DownloadParserModel implements Runnable, DownloadParserModelInterfa
                     e.printStackTrace();
                 }
 
-                mProcessData.append(MessageFormat.format(resBundle.getString("downloader.exit.value"), pRtmpdump.exitValue()));
+                appendParserOutput(MessageFormat.format(resBundle.getString("downloader.exit.value"), pRtmpdump.exitValue()));
                 mDownloadFinished = true;
             } else {
-                mProcessData.append(resBundle.getString("downloader.episode.does.not.exist"));
+                appendParserOutput(resBundle.getString("downloader.episode.does.not.exist"));
             }
         } else {
             if (skipRTMP) {
-                mProcessData.append(resBundle.getString("downloader.rtmp.skipped"));
+                appendParserOutput(resBundle.getString("downloader.rtmp.skipped"));
             } else {
-                mProcessData.append(resBundle.getString("downloader.not.all.information"));
+                appendParserOutput(resBundle.getString("downloader.not.all.information"));
             }
         }
+    }
+
+    private void appendParserOutput(String line) {
+        mProcessData.append(line);
+        processDownloaderObserver();
     }
 
     @Override
