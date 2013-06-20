@@ -37,6 +37,8 @@ public class Downloader extends JDialog implements DownloaderObserver {
         this.model = model;
         this.controller = controller;
 
+        this.model.registerObserver(this);
+
         setContentPane(contentPane);
         getRootPane().setDefaultButton(buttonOK);
         setTitle(MessageFormat.format(resBundle.getString("downloader.gameone.episode"), this.model.getEpisode()));
