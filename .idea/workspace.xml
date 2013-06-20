@@ -7,14 +7,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b5f9e813-2c54-4b84-a5c6-2ba52460311d" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\jac\IdeaProjects\GameOne-Downloader\src\de\questmaster\gameone_downloader\utils\ProgressMonitorETAInputStream.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/DownloadParserModel.java" afterPath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/DownloadParserModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/i18n.properties" afterPath="$PROJECT_DIR$/src/de/questmaster/gameone_downloader/i18n.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="GameOne-Downloader.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="b5f9e813-2c54-4b84-a5c6-2ba52460311d" time="1371741862870" ignored="false" />
+    <file path="/Dummy.txt" changelist="b5f9e813-2c54-4b84-a5c6-2ba52460311d" time="1371742527040" ignored="false" />
     <file path="/Downloader.java" changelist="b5f9e813-2c54-4b84-a5c6-2ba52460311d" time="1371741811991" ignored="false" />
     <file path="/Settings.java" changelist="b5f9e813-2c54-4b84-a5c6-2ba52460311d" time="1371738689858" ignored="false" />
     <file path="/Browser.java" changelist="b5f9e813-2c54-4b84-a5c6-2ba52460311d" time="1371739311019" ignored="false" />
@@ -131,7 +128,7 @@
       <file leaf-file-name="DownloadParserModel.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/DownloadParserModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="447" column="56" selection-start="19238" selection-end="19238" vertical-scroll-proportion="0.7263017">
+            <state line="458" column="103" selection-start="19526" selection-end="19526" vertical-scroll-proportion="0.97596794">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#712#732#0" expanded="true" />
@@ -570,7 +567,11 @@
       <created>1371741877361</created>
       <updated>1371741877361</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fixed DownloadParser output.&#10;">
+      <created>1371742534248</created>
+      <updated>1371742534248</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -838,7 +839,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/de/questmaster/gameone_downloader/DownloadParserModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="447" column="56" selection-start="19238" selection-end="19238" vertical-scroll-proportion="0.7263017">
+        <state line="458" column="103" selection-start="19526" selection-end="19526" vertical-scroll-proportion="0.97596794">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#712#732#0" expanded="true" />
