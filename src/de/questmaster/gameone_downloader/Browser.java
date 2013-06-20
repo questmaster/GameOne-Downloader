@@ -24,16 +24,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.File;
 import java.util.ResourceBundle;
 
 /**
  * Created by IntelliJ IDEA.
  * Date: 19.01.11
  * Time: 20:13
- * To change this template use File | SettingsImpl | File Templates.
+ * To change this template use File | Settings | File Templates.
  */
-public class Browser extends JFrame {
+public class Browser extends JFrame implements BrowserObserver {
     private JPanel panel1;
     private JTextField saveField;
     private JButton grabButton;
@@ -42,39 +41,26 @@ public class Browser extends JFrame {
     private JTextField rtmpLocationField;
     private JButton locateButton;
 
-    private Component c = this;
-    private String episodeNumber = "118";
-    private Settings p = null;
+    private BrowserControllerInterface controller;
+    private DownloaderModelInterface model;
+
     private ResourceBundle resBundle = ResourceBundle.getBundle("de.questmaster.gameone_downloader.i18n");
 
-    public Browser() {
-        super("GameOne Downloader v0.1.7");
+    public Browser(BrowserControllerInterface controller, DownloaderModelInterface model) {
+        setTitle(resBundle.getString("browser.title"));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(panel1);
         setPreferredSize(new Dimension(450, 154));
+        setLocation(model.getWindowPosition().x, model.getWindowPosition().y);
         pack();
 
-        SettingsImpl.setSettingsFile(System.getProperty("user.home") + System.getProperty("file.separator") + ".GameOneDownloader.properties");
-        p = SettingsImpl.createSettings();
+        // set model + controller
+        this.controller = controller;
+        this.model = model;
 
-        // set loaded properties
-        setLocation(p.getWindowLocation().width, p.getWindowLocation().height);
-        saveField.setText(p.getSaveLocation());
-        episodeNumber = p.getLastEpisode();
-        episodeSpinner.setValue(Integer.valueOf(episodeNumber));
-
-        // check for rtmpdump executable
-        File f = new File(p.getRTMPdumpLocation());
-        if (f.exists()) {
-            rtmpLocationField.setText(f.getAbsolutePath());
-            p.setRTMPdumpLocation(f.getAbsolutePath());
-            locateButton.setEnabled(false);
-            selectButton.setEnabled(true);
-            grabButton.setEnabled(true);
-        } else {
-            JOptionPane.showMessageDialog(this, resBundle.getString("browser.rtmpdump.executable.not.found"), resBundle.getString("browser.rtmpdump.not.found"), JOptionPane.OK_OPTION);
-        }
-
+        // register as model observer, update data
+        this.model.registerObserver(this);
+        notifyBrowserObserver();
 
         // following are all the listeners...
 
@@ -83,7 +69,7 @@ public class Browser extends JFrame {
             }
 
             public void windowClosing(WindowEvent e) {
-                p.setWindowLocation(new Dimension(getX(), getY()));
+                browser_WindowListener();
             }
 
             public void windowClosed(WindowEvent e) {
@@ -101,51 +87,22 @@ public class Browser extends JFrame {
             public void windowDeactivated(WindowEvent e) {
             }
         });
-
         selectButton.addActionListener(new ActionListener() {
             /**
              * Invoked when an action occurs.
              */
             public void actionPerformed(ActionEvent e) {
-                String curPath = saveField.getText();
-
-                JFileChooser chooser = new JFileChooser();
-                chooser.setSelectedFile(new File(curPath));
-                int returnVal = chooser.showSaveDialog(panel1);
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    File f = chooser.getSelectedFile();
-                    saveField.setText(f.getAbsolutePath());
-                    p.setSaveLocation(f.getParent() + System.getProperty("file.separator"));
-                }
+                selectButton_ActionListener();
             }
         });
-
         grabButton.addActionListener(new ActionListener() {
             /**
              * Invoked when an action occurs.
              */
             public void actionPerformed(ActionEvent e) {
-                saveField.setText(saveField.getText().replace("XXX", episodeNumber));
-                saveField.setEnabled(false);
-                selectButton.setEnabled(false);
-                episodeSpinner.setEnabled(false);
-                grabButton.setEnabled(false);
-
-                Downloader g = new Downloader(episodeNumber, saveField.getText(), rtmpLocationField.getText());
-                g.setLocationRelativeTo(c);
-                g.setVisible(true);
-                p.setLastEpisode(episodeNumber);
-
-                new Thread(g).start();
-
-                saveField.setText(saveField.getText().replace(episodeNumber, "XXX"));
-                saveField.setEnabled(true);
-                selectButton.setEnabled(true);
-                episodeSpinner.setEnabled(true);
-                grabButton.setEnabled(true);
+                grabButton_ActionListener();
             }
         });
-
         episodeSpinner.addChangeListener(new ChangeListener() {
             /**
              * Invoked when the target of the listener has changed its state.
@@ -153,14 +110,7 @@ public class Browser extends JFrame {
              * @param e a ChangeEvent object
              */
             public void stateChanged(ChangeEvent e) {
-                try {
-                    episodeNumber = String.valueOf(episodeSpinner.getValue());
-                    while (episodeNumber.length() < 3) {
-                        episodeNumber = "0" + episodeNumber;
-                    }
-                } catch (NumberFormatException ex) {
-                    ex.printStackTrace();
-                }
+                episodeSpinner_ChangeListener();
             }
         });
         locateButton.addActionListener(new ActionListener() {
@@ -168,28 +118,89 @@ public class Browser extends JFrame {
              * Invoked when an action occurs.
              */
             public void actionPerformed(ActionEvent e) {
-                String curPath = "rtmpdump.exe";
-
-                JFileChooser chooser = new JFileChooser();
-                chooser.setSelectedFile(new File(curPath));
-                int returnVal = chooser.showSaveDialog(panel1);
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    File f = chooser.getSelectedFile();
-                    if (f.exists()) {
-                        rtmpLocationField.setText(f.getAbsolutePath());
-                        p.setRTMPdumpLocation(f.getAbsolutePath());
-                        locateButton.setEnabled(false);
-                        selectButton.setEnabled(true);
-                        grabButton.setEnabled(true);
-                    }
-                }
+                locateButton_ActionListener();
             }
         });
+
+        setVisible(true);
+    }
+
+    private void locateButton_ActionListener() {
+        controller.locateRTMPdump();
+    }
+
+    private void grabButton_ActionListener() {
+        controller.download();
+    }
+
+    private void selectButton_ActionListener() {
+        controller.locateSaves();
+    }
+
+    private void episodeSpinner_ChangeListener() {
+        String episodeNumber = "";
+        try {
+            episodeNumber = String.valueOf(episodeSpinner.getValue());
+            controller.setEpisode(episodeNumber);
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void browser_WindowListener() {
+        controller.setWindowPosition(new Point(getX(), getY()));
     }
 
     private void createUIComponents() {
         episodeSpinner = new JSpinner(new SpinnerNumberModel(118, 102, 999, 1));
     }
 
+    public void enableSelectButton() {
+        selectButton.setEnabled(true);
+    }
 
+    public void disableSelectButton() {
+        selectButton.setEnabled(false);
+    }
+
+    public void enableGrabButton() {
+        grabButton.setEnabled(true);
+    }
+
+    public void disableGrabButton() {
+        grabButton.setEnabled(false);
+    }
+
+    public void enableLocateButton() {
+        locateButton.setEnabled(true);
+    }
+
+    public void disableLocateButton() {
+        locateButton.setEnabled(false);
+    }
+
+    public void enableSaveLocationField() {
+        saveField.setEnabled(true);
+    }
+
+    public void disableSaveLocationField() {
+        saveField.setEnabled(false);
+    }
+
+    public void enableEpisodeSpinner() {
+        episodeSpinner.setEnabled(true);
+    }
+
+    public void disableEpisodeSpinner() {
+        episodeSpinner.setEnabled(false);
+    }
+
+    @Override
+    public void notifyBrowserObserver() {
+        rtmpLocationField.setText(model.getRTMPdumpLocation());
+        saveField.setText(model.getSaveLocationFile());
+        episodeSpinner.setValue(Integer.decode(model.getEpisode()));
+
+        panel1.updateUI();
+    }
 }

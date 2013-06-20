@@ -15,39 +15,18 @@
  */
 package de.questmaster.gameone_downloader;
 
-import javax.swing.*;
-
 /**
  * Created by IntelliJ IDEA.
  * Date: 19.01.11
  * Time: 19:25
- * To change this template use File | SettingsImpl | File Templates.
+ * To change this template use File | Settings | File Templates.
  */
-public class Main extends JApplet {
-
-    private JApplet applet = this;
-
-    public void init() {
-        //Execute a job on the event-dispatching thread:
-        //creating this applet's GUI.
-
-        try {
-            javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
-                public void run() {
-                    Browser b = new Browser();
-                    applet.add(b.getContentPane());
-                }
-            });
-        } catch (Exception e) {
-            System.err.println("createGUI didn't successfully complete");
-            e.printStackTrace(System.err);
-        }
-    }
-
+public class Main {
     public static void main(String[] args) {
+        String settings = System.getProperty("user.home") + System.getProperty("file.separator") + ".GameOneDownloader.properties";
 
         // open main screen
-        Browser b = new Browser();
-        b.setVisible(true);
+        DownloaderModelInterface model = new DownloaderModel(settings);
+        new BrowserController(model);
     }
 }
